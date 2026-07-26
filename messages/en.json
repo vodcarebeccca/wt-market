@@ -1,0 +1,110 @@
+{
+  "brand": "WT Market",
+  "nav": {
+    "home": "Home",
+    "catalog": "Catalog",
+    "legal": "Terms",
+    "admin": "Admin",
+    "buy": "Buy"
+  },
+  "home": {
+    "heroTitle": "Ready-to-Play War Thunder Accounts",
+    "heroSubtitle": "Choose by level, rank, and nation. Automatic delivery after payment.",
+    "ctaCatalog": "Browse Catalog",
+    "featuresTitle": "Why WT Market?",
+    "feature1Title": "Auto Delivery",
+    "feature1Desc": "Credentials appear on your order page right after payment.",
+    "feature2Title": "Live Stock",
+    "feature2Desc": "Only products with available stock can be purchased.",
+    "feature3Title": "Midtrans Payments",
+    "feature3Desc": "QRIS, bank transfer, e-wallets, and cards via Midtrans.",
+    "featuredTitle": "Popular Products"
+  },
+  "catalog": {
+    "title": "Account Catalog",
+    "subtitle": "Filter by level, rank, nation, and price.",
+    "filters": "Filters",
+    "category": "Category",
+    "nation": "Nation",
+    "level": "Level",
+    "rank": "Rank",
+    "price": "Price (IDR)",
+    "min": "Min",
+    "max": "Max",
+    "sort": "Sort",
+    "sortPriceAsc": "Price: low to high",
+    "sortPriceDesc": "Price: high to low",
+    "sortNewest": "Newest",
+    "all": "All",
+    "apply": "Apply",
+    "reset": "Reset",
+    "empty": "No matching products.",
+    "stockReady": "{count} ready",
+    "soldOut": "Sold out",
+    "from": "from"
+  },
+  "product": {
+    "buyNow": "Buy Now",
+    "soldOut": "Sold Out",
+    "details": "Details",
+    "levelRange": "Level",
+    "rankRange": "Rank",
+    "nation": "Nation",
+    "category": "Category",
+    "stock": "Stock",
+    "backCatalog": "Back to catalog"
+  },
+  "checkout": {
+    "title": "Checkout",
+    "email": "Email (optional)",
+    "whatsapp": "WhatsApp (optional)",
+    "note": "Save your order link after paying — credentials only show there.",
+    "pay": "Pay with Midtrans",
+    "creating": "Creating order...",
+    "total": "Total",
+    "agree": "I understand third-party account risks (ban/reclaim per Gaijin ToS).",
+    "needAgree": "Please accept the risk disclaimer.",
+    "noStock": "Out of stock.",
+    "error": "Failed to create order."
+  },
+  "order": {
+    "title": "Order Status",
+    "code": "Order code",
+    "status": "Status",
+    "pending": "Awaiting payment",
+    "paid": "Paid — processing",
+    "delivered": "Delivered",
+    "failed": "Failed",
+    "expired": "Expired",
+    "credentials": "Account credentials",
+    "credentialsHint": "Save them now. Do not share this link.",
+    "waitingPayment": "Complete payment. Credentials appear here after settlement.",
+    "continuePay": "Continue payment",
+    "product": "Product",
+    "total": "Total",
+    "invalidToken": "Invalid order link.",
+    "notFound": "Order not found."
+  },
+  "legal": {
+    "title": "Terms & Disclaimer",
+    "body": "WT Market sells digital goods in the form of third-party game account access. Purchasing violates Gaijin Entertainment terms of service. Accounts may be banned, reclaimed, or stop working at any time. By purchasing you accept all such risks. No long-term availability is guaranteed. Refunds follow Midtrans and store policy."
+  },
+  "footer": {
+    "disclaimer": "Not affiliated with Gaijin. Third-party accounts — ban/reclaim risk on buyer.",
+    "rights": "© {year} WT Market"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "idr": "Rp",
+    "usd": "USD"
+  },
+  "categories": {
+    "LEVEL": "Level",
+    "RANK": "Rank",
+    "VEHICLE": "Vehicle",
+    "INACTIVE": "Inactive",
+    "PREMIUM": "Premium",
+    "GIFT": "Gift"
+  }
+}

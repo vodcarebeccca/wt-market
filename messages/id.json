@@ -1,0 +1,110 @@
+{
+  "brand": "WT Market",
+  "nav": {
+    "home": "Beranda",
+    "catalog": "Katalog",
+    "legal": "Syarat",
+    "admin": "Admin",
+    "buy": "Beli"
+  },
+  "home": {
+    "heroTitle": "Akun War Thunder Siap Pakai",
+    "heroSubtitle": "Level, rank, dan nation pilihan. Delivery otomatis setelah pembayaran.",
+    "ctaCatalog": "Lihat Katalog",
+    "featuresTitle": "Kenapa WT Market?",
+    "feature1Title": "Delivery Otomatis",
+    "feature1Desc": "Setelah bayar, kredensial langsung muncul di halaman order.",
+    "feature2Title": "Stok Real-time",
+    "feature2Desc": "Hanya produk yang ready stok yang bisa dibeli.",
+    "feature3Title": "Pembayaran Midtrans",
+    "feature3Desc": "QRIS, VA, e-wallet, dan kartu via Midtrans.",
+    "featuredTitle": "Produk Populer"
+  },
+  "catalog": {
+    "title": "Katalog Akun",
+    "subtitle": "Filter sesuai level, rank, nation, dan harga.",
+    "filters": "Filter",
+    "category": "Kategori",
+    "nation": "Nation",
+    "level": "Level",
+    "rank": "Rank",
+    "price": "Harga (IDR)",
+    "min": "Min",
+    "max": "Max",
+    "sort": "Urutkan",
+    "sortPriceAsc": "Harga termurah",
+    "sortPriceDesc": "Harga termahal",
+    "sortNewest": "Terbaru",
+    "all": "Semua",
+    "apply": "Terapkan",
+    "reset": "Reset",
+    "empty": "Tidak ada produk yang cocok.",
+    "stockReady": "{count} ready",
+    "soldOut": "Habis",
+    "from": "mulai"
+  },
+  "product": {
+    "buyNow": "Beli Sekarang",
+    "soldOut": "Stok Habis",
+    "details": "Detail",
+    "levelRange": "Level",
+    "rankRange": "Rank",
+    "nation": "Nation",
+    "category": "Kategori",
+    "stock": "Stok",
+    "backCatalog": "Kembali ke katalog"
+  },
+  "checkout": {
+    "title": "Checkout",
+    "email": "Email (opsional)",
+    "whatsapp": "WhatsApp (opsional)",
+    "note": "Simpan link order setelah bayar — kredensial hanya tampil di sana.",
+    "pay": "Bayar dengan Midtrans",
+    "creating": "Membuat order...",
+    "total": "Total",
+    "agree": "Saya memahami risiko akun third-party (bisa ban/reclaim sesuai ToS Gaijin).",
+    "needAgree": "Centang persetujuan risiko dulu.",
+    "noStock": "Stok habis.",
+    "error": "Gagal membuat order."
+  },
+  "order": {
+    "title": "Status Order",
+    "code": "Kode order",
+    "status": "Status",
+    "pending": "Menunggu pembayaran",
+    "paid": "Sudah dibayar — sedang diproses",
+    "delivered": "Terkirim",
+    "failed": "Gagal",
+    "expired": "Kedaluwarsa",
+    "credentials": "Kredensial akun",
+    "credentialsHint": "Simpan segera. Jangan bagikan link ini.",
+    "waitingPayment": "Selesaikan pembayaran. Halaman ini akan menampilkan kredensial setelah lunas.",
+    "continuePay": "Lanjut bayar",
+    "product": "Produk",
+    "total": "Total",
+    "invalidToken": "Link order tidak valid.",
+    "notFound": "Order tidak ditemukan."
+  },
+  "legal": {
+    "title": "Syarat & Disclaimer",
+    "body": "WT Market menjual barang digital berupa akses akun game dari pihak ketiga. Pembelian melanggar ketentuan layanan Gaijin Entertainment. Akun dapat di-ban, di-reclaim, atau tidak berfungsi kapan saja. Dengan membeli, Anda menerima seluruh risiko tersebut. Tidak ada jaminan ketersediaan jangka panjang. Refund mengikuti kebijakan Midtrans dan kebijakan toko yang berlaku."
+  },
+  "footer": {
+    "disclaimer": "Bukan afiliasi Gaijin. Akun third-party — risiko ban/reclaim ditanggung pembeli.",
+    "rights": "© {year} WT Market"
+  },
+  "common": {
+    "loading": "Memuat...",
+    "error": "Terjadi kesalahan",
+    "idr": "Rp",
+    "usd": "USD"
+  },
+  "categories": {
+    "LEVEL": "Level",
+    "RANK": "Rank",
+    "VEHICLE": "Kendaraan",
+    "INACTIVE": "Inactive",
+    "PREMIUM": "Premium",
+    "GIFT": "Gift"
+  }
+}

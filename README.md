@@ -1,36 +1,49 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# WT Market
 
-## Getting Started
+Toko online akun War Thunder (Next.js + Prisma SQLite + Midtrans).
 
-First, run the development server:
+## Fitur
+
+- Katalog bilingual ID/EN + filter (kategori, nation, level, rank, harga)
+- Admin: produk, stok bulk paste/upload, order, mark paid
+- Auto-delivery kredensial setelah bayar (webhook Midtrans atau mark paid manual)
+- Harga IDR primary + tampilan USD
+
+## Setup
 
 ```bash
+cd "E:\toko saya"
+npm install
+# edit .env (lihat .env.example)
+npx prisma migrate dev
+npm run db:seed
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Buka:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Storefront: http://localhost:3000/id
+- Admin: http://localhost:3000/admin  
+  Default: `admin@wtmarket.local` / `admin123`
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Midtrans
 
-## Learn More
+1. Daftar Midtrans Sandbox
+2. Isi di `.env`: `MIDTRANS_SERVER_KEY`, `MIDTRANS_CLIENT_KEY`, `NEXT_PUBLIC_MIDTRANS_CLIENT_KEY`
+3. Webhook URL: `https://<public-url>/api/midtrans/notification` (cloudflared/ngrok saat local)
+4. Tanpa key valid, order tetap dibuat — admin bisa **Mark paid + deliver**
 
-To learn more about Next.js, take a look at the following resources:
+Kartu sandbox: `4811 1111 1111 1114` / CVV `123` / OTP `112233`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Alur jual
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Admin tambah produk + import stok `email:password` per baris
+2. Buyer checkout → bayar Midtrans (atau admin mark paid)
+3. Sistem assign 1 stok AVAILABLE → order `DELIVERED`
+4. Buyer buka link order `?token=...` untuk lihat kredensial
 
-## Deploy on Vercel
+## Catatan
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Bukan afiliasi Gaijin. Jual-beli akun melanggar ToS War Thunder.
+- Kredensial disimpan plaintext di SQLite lokal — amankan file DB di production.
+- Ganti `ADMIN_PASSWORD` dan `SESSION_SECRET` sebelum deploy.
