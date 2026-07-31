@@ -38,9 +38,30 @@ export function SnapPayButton({ snapToken, orderCode, accessToken, locale, label
       process.env.NEXT_PUBLIC_MIDTRANS_SNAP_URL ||
       "https://app.sandbox.midtrans.com/snap/snap.js";
 
+    // Bail out early if the script is already loaded and ready
+    if (window.snap) {
+      setReady(true);
+      return;
+    }
+
+    // Bail out if the script tag already exists (may still be loading)
     if (document.querySelector(`script[src="${snapUrl}"]`)) {
-      const timer = window.setTimeout(() => setReady(true), 0);
-      return () => window.clearTimeout(timer);
+      // Wait for it to become available
+      const checkReady = window.setInterval(() => {
+        if (window.snap) {
+          window.clearInterval(checkReady);
+          setReady(true);
+        }
+      }, 100);
+      // Fallback timeout — give it 10s max to load
+      const fallback = window.setTimeout(() => {
+        window.clearInterval(checkReady);
+        if (window.snap) setReady(true);
+      }, 10_000);
+      return () => {
+        window.clearInterval(checkReady);
+        window.clearTimeout(fallback);
+      };
     }
 
     const script = document.createElement("script");

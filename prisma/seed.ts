@@ -14,9 +14,9 @@ async function main() {
     create: { email, passwordHash },
   });
 
-  await prisma.stockItem.deleteMany();
-  await prisma.orderItem.deleteMany();
   await prisma.payment.deleteMany();
+  await prisma.orderItem.deleteMany();
+  await prisma.stockItem.deleteMany();
   await prisma.order.deleteMany();
   await prisma.product.deleteMany();
 
@@ -236,6 +236,27 @@ async function main() {
       stock: [
         "gaijin_max_l100_001@mail.test:GaijinMax100!",
         "gaijin_max_l100_002@mail.test:GaijinMax100!",
+      ],
+    },
+
+    // ===== RANK / TIER SPECIFIC (Rp 40.000 - 60.000) =====
+    {
+      slug: "wt-rank-10-0-tank",
+      titleId: "WT Rank 10.0 Tank",
+      titleEn: "WT Rank 10.0 Tank",
+      descId: "Akun War Thunder tanpa email access. Rank 10.0 tank — full end-game MBT access. Siap battle modern.",
+      descEn: "War Thunder account without email access. Rank 10.0 tank — full end-game MBT access. Ready for modern battles.",
+      minRank: 10,
+      maxRank: 10,
+      category: "RANK",
+      nation: "ANY",
+      priceIdr: 40_000, // ~$2.22 — beli ~$1.00, margin ~2.2x
+      stock: [
+        "rank10_tank_001@noemail.test:Rank10Tank!",
+        "rank10_tank_002@noemail.test:Rank10Tank!",
+        "rank10_tank_003@noemail.test:Rank10Tank!",
+        "rank10_tank_004@noemail.test:Rank10Tank!",
+        "rank10_tank_005@noemail.test:Rank10Tank!",
       ],
     },
   ];

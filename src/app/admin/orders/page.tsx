@@ -3,6 +3,21 @@ import { AdminShell } from "@/components/admin/AdminShell";
 import { prisma } from "@/lib/prisma";
 import { formatIdr } from "@/lib/money";
 
+function statusLabel(status: string) {
+  switch (status) {
+    case "PENDING":
+      return "Menunggu Bayar";
+    case "PAID":
+      return "Sudah Bayar";
+    case "DELIVERED":
+      return "Terkirim";
+    case "FAILED":
+      return "Gagal";
+    default:
+      return status;
+  }
+}
+
 export default async function AdminOrdersPage() {
   const orders = await prisma.order.findMany({
     orderBy: { createdAt: "desc" },
@@ -46,7 +61,7 @@ export default async function AdminOrdersPage() {
                             : "badge-danger"
                       }`}
                     >
-                      {o.status}
+                      {statusLabel(o.status)}
                     </span>
                   </td>
                   <td className="px-4 py-3 text-muted">

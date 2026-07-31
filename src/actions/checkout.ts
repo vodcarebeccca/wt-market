@@ -41,44 +41,81 @@ export async function createCheckoutOrder(input: {
     return { ok: false, error: "Invalid input / risk not accepted" };
   }
 
-  const product = await prisma.product.findUnique({
-    where: { id: parsed.data.productId },
-    include: {
-      _count: { select: { stockItems: { where: { status: "AVAILABLE" } } } },
-    },
-  });
-
-  if (!product || !product.isActive) {
-    return { ok: false, error: "Product not found" };
-  }
-  if (product._count.stockItems < 1) {
-    return { ok: false, error: "Out of stock" };
-  }
-
   const code = generateOrderCode();
   const accessToken = generateAccessToken();
-  const title = parsed.data.locale === "en" ? product.titleEn : product.titleId;
 
-  const order = await prisma.order.create({
-    data: {
-      code,
-      accessToken,
-      buyerEmail: parsed.data.buyerEmail || null,
-      buyerWhatsapp: parsed.data.buyerWhatsapp || null,
-      locale: parsed.data.locale,
-      status: "PENDING",
-      totalIdr: product.priceIdr,
-      midtransOrderId: code,
-      items: {
-        create: {
-          productId: product.id,
-          productTitle: title,
-          unitPriceIdr: product.priceIdr,
-          quantity: 1,
-        },
+  // Atomic reserve: cek stok + create order + reserve stock dalam 1 transaksi
+  const reserveResult = await prisma.$transaction(async (tx) => {
+    const product = await tx.product.findUnique({
+      where: { id: parsed.data.productId },
+    });
+
+    if (!product || !product.isActive) {
+      return { ok: false as const, error: "Product not found" };
+    }
+
+    const title = parsed.data.locale === "en" ? product.titleEn : product.titleId;
+
+    // Cari & kunci 1 stok AVAILABLE
+    const stock = await tx.stockItem.findFirst({
+      where: {
+        productId: parsed.data.productId,
+        status: "AVAILABLE",
       },
-    },
+      orderBy: { createdAt: "asc" },
+    });
+
+    if (!stock) {
+      return { ok: false as const, error: "Out of stock" };
+    }
+
+    // Buat order + order item
+    const order = await tx.order.create({
+      data: {
+        code,
+        accessToken,
+        buyerEmail: parsed.data.buyerEmail || null,
+        buyerWhatsapp: parsed.data.buyerWhatsapp || null,
+        locale: parsed.data.locale,
+        status: "PENDING",
+        totalIdr: product.priceIdr,
+        midtransOrderId: code,
+      },
+    });
+
+    const orderItem = await tx.orderItem.create({
+      data: {
+        orderId: order.id,
+        productId: product.id,
+        productTitle: title,
+        unitPriceIdr: product.priceIdr,
+        quantity: 1,
+      },
+    });
+
+    // Reserve stok — link ke order item
+    await tx.stockItem.update({
+      where: { id: stock.id },
+      data: {
+        status: "RESERVED",
+        orderItemId: orderItem.id,
+      },
+    });
+
+    return {
+      ok: true as const,
+      orderId: order.id,
+      orderItemId: orderItem.id,
+      orderCode: code,
+      accessToken,
+      title,
+      priceIdr: product.priceIdr,
+    };
   });
+
+  if (!reserveResult.ok) {
+    return { ok: false, error: reserveResult.error };
+  }
 
   let snapToken: string | null = null;
   let redirectUrl: string | null = null;
@@ -88,20 +125,25 @@ export async function createCheckoutOrder(input: {
     try {
       const snap = await createSnapTransaction({
         orderId: code,
-        amountIdr: product.priceIdr,
-        itemName: title,
+        amountIdr: reserveResult.priceIdr,
+        itemName: reserveResult.title,
         customerEmail: parsed.data.buyerEmail,
         customerPhone: parsed.data.buyerWhatsapp,
       });
       snapToken = snap.token;
       redirectUrl = snap.redirectUrl;
       await prisma.order.update({
-        where: { id: order.id },
+        where: { id: reserveResult.orderId },
         data: { midtransSnapToken: snapToken },
       });
     } catch (err) {
       console.error("Midtrans create failed", err);
       manualPay = true;
+      // Release reserved stock so it's not permanently locked if Midtrans is down
+      await prisma.stockItem.updateMany({
+        where: { orderItemId: reserveResult.orderItemId },
+        data: { status: "AVAILABLE", orderItemId: null },
+      });
     }
   } else {
     manualPay = true;

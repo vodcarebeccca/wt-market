@@ -7,10 +7,14 @@ export default async function AdminDashboardPage() {
   const startOfDay = new Date();
   startOfDay.setHours(0, 0, 0, 0);
 
-  const [pendingCount, deliveredToday, revenueAgg, lowStock, recentOrders] = await Promise.all([
+  const [pendingCount, deliveredToday, revenueAllTime, revenueToday, lowStock, recentOrders] = await Promise.all([
     prisma.order.count({ where: { status: "PENDING" } }),
     prisma.order.count({
       where: { status: "DELIVERED", deliveredAt: { gte: startOfDay } },
+    }),
+    prisma.order.aggregate({
+      where: { status: { in: ["PAID", "DELIVERED"] } },
+      _sum: { totalIdr: true },
     }),
     prisma.order.aggregate({
       where: { status: { in: ["PAID", "DELIVERED"] }, paidAt: { gte: startOfDay } },
@@ -51,9 +55,15 @@ export default async function AdminDashboardPage() {
             <p className="mt-1 text-3xl font-bold">{deliveredToday}</p>
           </div>
           <div className="card p-5">
-            <p className="text-sm text-muted">Revenue hari ini</p>
+            <p className="text-sm text-muted">Revenue all-time</p>
             <p className="mt-1 text-2xl font-bold text-success">
-              {formatIdr(revenueAgg._sum.totalIdr || 0)}
+              {formatIdr(revenueAllTime._sum.totalIdr || 0)}
+            </p>
+          </div>
+          <div className="card p-5">
+            <p className="text-sm text-muted">Revenue hari ini</p>
+            <p className="mt-1 text-2xl font-bold text-muted">
+              {formatIdr(revenueToday._sum.totalIdr || 0)}
             </p>
           </div>
         </div>
@@ -97,7 +107,9 @@ export default async function AdminDashboardPage() {
                   <Link href={`/admin/orders/${o.id}`} className="font-mono hover:text-accent">
                     {o.code}
                   </Link>
-                  <span className="text-muted">{o.status}</span>
+                  <span className="text-muted">
+                    {o.status === "PENDING" ? "Menunggu Bayar" : o.status === "PAID" ? "Sudah Bayar" : o.status === "DELIVERED" ? "Terkirim" : o.status === "FAILED" ? "Gagal" : o.status}
+                  </span>
                 </li>
               ))}
             </ul>

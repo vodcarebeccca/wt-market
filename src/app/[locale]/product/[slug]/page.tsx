@@ -24,7 +24,7 @@ export default async function ProductPage({ params }: Props) {
 
   return (
     <div className="space-y-6">
-      <Link href="/catalog" className="text-sm text-muted hover:text-accent">
+      <Link href={`/${locale}/catalog`} className="text-sm text-muted hover:text-accent">
         ← {t("product.backCatalog")}
       </Link>
 
