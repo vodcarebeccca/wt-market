@@ -189,56 +189,6 @@ async function main() {
       ],
     },
 
-    // ===== ELITE / GIFT TIER (Rp 75.000 - 120.000) =====
-    {
-      slug: "wt-gaijin-80-gift3",
-      titleId: "[Gaijin] Elite Account — Level 80 + 3 Gifts",
-      titleEn: "[Gaijin] Elite Account — Level 80 + 3 Gifts",
-      descId: "Akun Gaijin resmi level 80 + 3 premium gift. Status clean, no warnings.",
-      descEn: "Official Gaijin account level 80 + 3 premium gifts. Clean status, no warnings.",
-      minLevel: 80,
-      maxLevel: 80,
-      category: "GIFT",
-      nation: "ANY",
-      priceIdr: 79_900, // ~$3.40 — beli ~$1.30, margin ~2.6x
-      stock: [
-        "gaijin_elite_l80_001@mail.test:GaijinElite80!",
-        "gaijin_elite_l80_002@mail.test:GaijinElite80!",
-      ],
-    },
-    {
-      slug: "wt-gaijin-90-gift3",
-      titleId: "[Gaijin] Veteran Account — Level 90 + 3 Gifts",
-      titleEn: "[Gaijin] Veteran Account — Level 90 + 3 Gifts",
-      descId: "Akun Gaijin veteran level 90 + 3 gift. Dekat max, histori bersih.",
-      descEn: "Gaijin veteran account level 90 + 3 gifts. Near max, clean history.",
-      minLevel: 90,
-      maxLevel: 90,
-      category: "GIFT",
-      nation: "ANY",
-      priceIdr: 99_900, // ~$4.25 — beli ~$1.50, margin ~2.8x
-      stock: [
-        "gaijin_vet_l90_001@mail.test:GaijinVet90!",
-        "gaijin_vet_l90_002@mail.test:GaijinVet90!",
-      ],
-    },
-    {
-      slug: "wt-gaijin-100-gift3",
-      titleId: "[Gaijin] MAX Account — Level 100 + 3 Gifts",
-      titleEn: "[Gaijin] MAX Account — Level 100 + 3 Gifts",
-      descId: "AKUN TERBAIK: Level 100 MAX + 3 premium gift. Semua vehicle terbuka. Instant end-game.",
-      descEn: "BEST ACCOUNT: Max level 100 + 3 premium gifts. All vehicles unlocked. Instant end-game.",
-      minLevel: 100,
-      maxLevel: 100,
-      category: "GIFT",
-      nation: "ANY",
-      priceIdr: 129_900, // ~$5.53 — beli ~$2.00, margin ~2.7x
-      stock: [
-        "gaijin_max_l100_001@mail.test:GaijinMax100!",
-        "gaijin_max_l100_002@mail.test:GaijinMax100!",
-      ],
-    },
-
     // ===== RANK / TIER SPECIFIC (Rp 40.000 - 60.000) =====
     {
       slug: "wt-rank-10-0-tank",
