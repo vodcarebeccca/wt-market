@@ -26,10 +26,7 @@ export function Header() {
     <header className="sticky top-0 z-40 border-b border-border/80 bg-background/90 backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
         <Link href="/" className="flex items-center gap-2 font-bold tracking-tight">
-          <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-accent text-sm text-black">
-            WT
-          </span>
-          <span>{t("brand")}</span>
+          <img src="/logo/logo.png" alt="WT Market" className="h-10 w-auto" />
         </Link>
 
         <nav className="flex items-center gap-1 text-sm sm:gap-3">
