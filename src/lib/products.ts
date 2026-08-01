@@ -11,6 +11,7 @@ export type CatalogFilters = {
   minPrice?: number;
   maxPrice?: number;
   sort?: string;
+  search?: string;
 };
 
 function num(v: string | undefined) {
@@ -36,6 +37,7 @@ export function parseCatalogFilters(
     minPrice: num(g("minPrice")),
     maxPrice: num(g("maxPrice")),
     sort: g("sort") || "price_asc",
+    search: g("search") || undefined,
   };
 }
 
@@ -51,6 +53,16 @@ export async function listProducts(filters: CatalogFilters = {}) {
     if (filters.minPrice != null) where.priceIdr.gte = filters.minPrice;
     if (filters.maxPrice != null) where.priceIdr.lte = filters.maxPrice;
   }
+  if (filters.search) {
+    const q = filters.search.toLowerCase();
+    where.OR = [
+      { titleId: { contains: q } },
+      { titleEn: { contains: q } },
+      { descId: { contains: q } },
+      { descEn: { contains: q } },
+    ];
+  }
+
   if (filters.minLevel != null || filters.maxLevel != null) {
     where.AND = [
       ...(Array.isArray(where.AND) ? where.AND : where.AND ? [where.AND] : []),

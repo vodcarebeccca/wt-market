@@ -2,14 +2,25 @@
 
 import { useLocale, useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/routing";
+import { useTheme } from "next-themes";
+import { useSyncExternalStore } from "react";
+
+function useMounted() {
+  return useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false,
+  );
+}
 
 export function Header() {
   const t = useTranslations();
   const locale = useLocale();
   const otherLocale = locale === "id" ? "en" : "id";
   const pathname = usePathname();
-  // Strip locale prefix (e.g. "/en/catalog" → "/catalog") to avoid double locale
   const cleanPathname = pathname?.replace(/^\/(en|id)\//, "/") || "/";
+  const { theme, setTheme } = useTheme();
+  const mounted = useMounted();
 
   return (
     <header className="sticky top-0 z-40 border-b border-border/80 bg-background/90 backdrop-blur">
@@ -38,6 +49,15 @@ export function Header() {
           >
             {otherLocale}
           </Link>
+          {mounted && (
+            <button
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              className="rounded-lg border border-border px-2 py-1 text-xs text-muted hover:text-foreground"
+              aria-label="Toggle theme"
+            >
+              {theme === "dark" ? "☀️ Light" : "🌙 Dark"}
+            </button>
+          )}
         </nav>
       </div>
     </header>

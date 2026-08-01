@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { type Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/routing";
 import { getProductBySlug } from "@/lib/products";
@@ -7,6 +8,24 @@ import { formatPricePair } from "@/lib/money";
 type Props = {
   params: Promise<{ locale: string; slug: string }>;
 };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale, slug } = await params;
+  const product = await getProductBySlug(slug);
+  if (!product) return {};
+  const title = locale === "en" ? product.titleEn : product.titleId;
+  const desc = locale === "en" ? product.descEn : product.descId;
+  return {
+    title,
+    description: desc.slice(0, 160),
+    openGraph: {
+      title,
+      description: desc.slice(0, 160),
+      locale: locale === "id" ? "id_ID" : "en_US",
+      type: "website",
+    },
+  };
+}
 
 export default async function ProductPage({ params }: Props) {
   const { locale, slug } = await params;

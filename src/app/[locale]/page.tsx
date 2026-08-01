@@ -9,6 +9,7 @@ export default async function HomePage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations();
+  const cat = await getTranslations({ locale, namespace: "categories" });
   const products = (await listProducts({ sort: "newest" })).slice(0, 4);
 
   return (
@@ -55,6 +56,7 @@ export default async function HomePage({ params }: Props) {
               labels={{
                 stockReady: t("catalog.stockReady", { count: p.stockCount }),
                 soldOut: t("catalog.soldOut"),
+                categoryLabel: cat(p.category as Parameters<typeof cat>[0]),
               }}
             />
           ))}

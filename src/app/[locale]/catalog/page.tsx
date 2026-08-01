@@ -1,4 +1,5 @@
 import { Suspense } from "react";
+import { type Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { FilterBar } from "@/components/catalog/FilterBar";
 import { ProductCard } from "@/components/catalog/ProductCard";
@@ -9,11 +10,27 @@ type Props = {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 };
 
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations();
+  return {
+    title: t("catalog.title"),
+    description: t("catalog.subtitle"),
+    openGraph: {
+      title: t("catalog.title"),
+      description: t("catalog.subtitle"),
+      locale: locale === "id" ? "id_ID" : "en_US",
+      type: "website",
+    },
+  };
+}
+
 export default async function CatalogPage({ params, searchParams }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
   const sp = await searchParams;
   const t = await getTranslations();
+  const cat = await getTranslations({ locale, namespace: "categories" });
   const filters = parseCatalogFilters(sp);
   const products = await listProducts(filters);
 
@@ -49,6 +66,16 @@ export default async function CatalogPage({ params, searchParams }: Props) {
         </Suspense>
 
         <div>
+          <form action={`/${locale}/catalog`} method="get" className="mb-4">
+            <input
+              type="text"
+              name="search"
+              placeholder={t("catalog.searchPlaceholder") || "Search..."}
+              defaultValue={sp.search as string || ""}
+              className="input"
+            />
+          </form>
+
           {products.length === 0 ? (
             <div className="card p-8 text-center text-muted">{t("catalog.empty")}</div>
           ) : (
@@ -61,6 +88,7 @@ export default async function CatalogPage({ params, searchParams }: Props) {
                   labels={{
                     stockReady: t("catalog.stockReady", { count: p.stockCount }),
                     soldOut: t("catalog.soldOut"),
+                    categoryLabel: cat(p.category as "LEVEL" | "RANK" | "VEHICLE" | "INACTIVE" | "PREMIUM" | "GIFT"),
                   }}
                 />
               ))}

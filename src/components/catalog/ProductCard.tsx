@@ -1,34 +1,25 @@
+"use client";
+
 import { Link } from "@/i18n/routing";
 import { formatPricePair } from "@/lib/money";
-import { getTranslations } from "next-intl/server";
+import { useWishlist } from "@/lib/wishlist";
+import { Product } from "@prisma/client";
 
 type ProductCardProps = {
   locale: string;
-  product: {
-    slug: string;
-    titleId: string;
-    titleEn: string;
-    category: string;
-    nation: string | null;
-    priceIdr: number;
-    minLevel: number | null;
-    maxLevel: number | null;
-    minRank: number | null;
-    maxRank: number | null;
-    stockCount: number;
-  };
+  product: Product & { stockCount: number };
   labels: {
     stockReady: string;
     soldOut: string;
+    categoryLabel: string;
   };
 };
 
-export async function ProductCard({ locale, product, labels }: ProductCardProps) {
-  const t = await getTranslations({ locale, namespace: "categories" });
+export function ProductCard({ locale, product, labels }: ProductCardProps) {
+  const { isWishlisted, toggle, loaded } = useWishlist();
   const title = locale === "en" ? product.titleEn : product.titleId;
   const price = formatPricePair(product.priceIdr);
   const inStock = product.stockCount > 0;
-  const categoryLabel = t(product.category as "LEVEL" | "RANK" | "VEHICLE" | "INACTIVE" | "PREMIUM" | "GIFT");
 
   return (
     <Link
@@ -38,10 +29,23 @@ export async function ProductCard({ locale, product, labels }: ProductCardProps)
       <div className="scanline relative flex h-36 items-end bg-gradient-to-br from-zinc-800 via-zinc-900 to-black p-4">
         <div className="absolute inset-0 opacity-30 [background-image:radial-gradient(circle_at_20%_20%,#f59e0b33,transparent_40%),radial-gradient(circle_at_80%_0%,#3b82f633,transparent_35%)]" />
         <div className="relative flex w-full items-center justify-between gap-2">
-          <span className="badge badge-warn">{categoryLabel}</span>
+          <span className="badge badge-warn">{labels.categoryLabel}</span>
           <span className={`badge ${inStock ? "badge-success" : "badge-danger"}`}>
             {inStock ? labels.stockReady : labels.soldOut}
           </span>
+          {loaded && (
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                toggle(product.id);
+              }}
+              className="text-lg transition-transform hover:scale-125"
+              aria-label={isWishlisted(product.id) ? "Remove from wishlist" : "Add to wishlist"}
+            >
+              {isWishlisted(product.id) ? "❤️" : "🤍"}
+            </button>
+          )}
         </div>
       </div>
       <div className="flex flex-1 flex-col gap-2 p-4">

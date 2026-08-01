@@ -39,6 +39,7 @@
     "apply": "Apply",
     "reset": "Reset",
     "empty": "No matching products.",
+    "searchPlaceholder": "Search products...",
     "stockReady": "{count} ready",
     "soldOut": "Sold out",
     "from": "from"

@@ -1,11 +1,14 @@
+import { Prisma } from "@prisma/client";
 import { prisma } from "./prisma";
+
+type PrismaTx = Prisma.TransactionClient;
 
 /**
  * Internal helper: assign stock items to order lines and update order status.
  * Shared by deliverOrder and markOrderPaidAndDeliver.
  */
 async function assignStockAndFinalize(
-  tx: Parameters<typeof prisma.$transaction>[0] extends (tx: infer T) => any ? T : never,
+  tx: PrismaTx,
   order: { id: string; status: string; paidAt?: Date | null; adminNote?: string | null },
   items: Array<{ id: string; productId: string }>,
   now: Date,

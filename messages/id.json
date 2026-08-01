@@ -39,6 +39,7 @@
     "apply": "Terapkan",
     "reset": "Reset",
     "empty": "Tidak ada produk yang cocok.",
+    "searchPlaceholder": "Cari produk...",
     "stockReady": "{count} ready",
     "soldOut": "Habis",
     "from": "mulai"
