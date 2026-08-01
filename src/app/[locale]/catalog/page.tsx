@@ -66,7 +66,7 @@ export default async function CatalogPage({ params, searchParams }: Props) {
         </Suspense>
 
         <div>
-          <form action={`/${locale}/catalog`} method="get" className="mb-4">
+          <form action="/catalog" method="get" className="mb-4">
             <input
               type="text"
               name="search"
