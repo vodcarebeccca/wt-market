@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="120" viewBox="0 0 400 120">
+  <defs>
+    <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f59e0b"/>
+      <stop offset="100%" style="stop-color:#d97706"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="400" height="120" fill="transparent"/>
+  <!-- Shield shape -->
+  <polygon points="60,20 140,20 150,45 140,70 100,90 60,70 50,45" fill="none" stroke="url(#g1)" stroke-width="4" filter="url(#glow)"/>
+  <text x="100" y="68" text-anchor="middle" font-family="Arial,sans-serif" font-size="40" font-weight="900" fill="url(#g1)" filter="url(#glow)">WT</text>
+  <!-- Market text -->
+  <text x="170" y="68" font-family="Arial,sans-serif" font-size="28" font-weight="700" fill="#fafafa" letter-spacing="3">MARKET</text>
+  <text x="170" y="85" font-family="Arial,sans-serif" font-size="10" fill="#a1a1aa" letter-spacing="6">WAR THUNDER</text>
+</svg>
