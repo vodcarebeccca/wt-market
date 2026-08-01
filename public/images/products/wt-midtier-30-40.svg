@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450" viewBox="0 0 800 450">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f0f12"/>
+      <stop offset="50%" style="stop-color:#18181b"/>
+      <stop offset="100%" style="stop-color:#09090b"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#10b981"/>
+      <stop offset="100%" style="stop-color:#34d399"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="30%">
+      <stop offset="0%" style="stop-color:#10b981;stop-opacity:0.3"/>
+      <stop offset="100%" style="stop-color:transparent"/>
+    </radialGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#bg)"/>
+  <circle cx="400" cy="160" r="220" fill="url(#glow)"/>
+  <rect x="0" y="360" width="800" height="90" fill="rgba(0,0,0,0.6)"/>
+  <text x="400" y="410" text-anchor="middle" font-family="Arial,sans-serif" font-size="26" font-weight="bold" fill="url(#accent)">MID-TIER READY</text>
+  <text x="400" y="440" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" fill="#a1a1aa">Lv 30–40 · Rank III–IV · All Nations</text>
+  <g transform="translate(400,170)" opacity="0.8">
+    <rect x="-80" y="-30" width="160" height="25" rx="5" fill="currentColor" opacity="0.3"/>
+    <polygon points="-60,-30 -40,-70 40,-70 60,-30" fill="currentColor" opacity="0.5"/>
+    <rect x="-15" y="-85" width="30" height="20" rx="3" fill="currentColor" opacity="0.7"/>
+    <circle cx="-65" cy="5" r="32" fill="none" stroke="currentColor" stroke-width="3" opacity="0.4"/>
+    <circle cx="65" cy="5" r="32" fill="none" stroke="currentColor" stroke-width="3" opacity="0.4"/>
+    <circle cx="-65" cy="5" r="12" fill="currentColor" opacity="0.5"/>
+    <circle cx="65" cy="5" r="12" fill="currentColor" opacity="0.5"/>
+    <text x="0" y="55" text-anchor="middle" font-size="16" font-weight="bold" opacity="0.6">⚡</text>
+  </g>
+  <text x="400" y="90" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" font-weight="bold" fill="#10b981" opacity="0.7">LEVEL</text>
+</svg>
