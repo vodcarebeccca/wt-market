@@ -11,124 +11,163 @@
     .sub { text-align: center; color: #a1a1aa; font-size: 13px; margin-bottom: 40px; }
     .options { display: flex; flex-direction: column; gap: 30px; max-width: 750px; margin: 0 auto; }
     .option { background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 28px; }
-    .option.selected { border-color: #f59e0b; box-shadow: 0 0 20px rgba(245,158,11,0.15); }
     .option h3 { color: #f59e0b; margin-bottom: 12px; font-size: 18px; }
     .option .lang { color: #71717a; font-size: 11px; margin-bottom: 8px; text-transform: uppercase; }
-    .option p { line-height: 1.7; font-size: 14px; color: #d4d4d8; }
+    .option p { line-height: 1.7; font-size: 14px; color: #d4d4d8; margin-bottom: 14px; }
     .option .en { margin-top: 16px; padding-top: 16px; border-top: 1px solid #27272a; }
     .highlight { color: #f59e0b; font-weight: 600; }
     .badge { display: inline-block; padding: 4px 10px; border-radius: 99px; font-size: 12px; margin-bottom: 12px; }
-    .badge-short { background: #22c55e20; color: #86efac; border: 1px solid #22c55e40; }
-    .badge-medium { background: #f59e0b20; color: #fcd34d; border: 1px solid #f59e0b40; }
-    .badge-long { background: #3b82f620; color: #93c5fd; border: 1px solid #3b82f640; }
+    .badge-v1 { background: #f59e0b20; color: #fcd34d; border: 1px solid #f59e0b40; }
+    .badge-v2 { background: #3b82f620; color: #93c5fd; border: 1px solid #3b82f640; }
+    .section-title { color: #f59e0b; font-weight: 700; font-size: 15px; margin-top: 16px; margin-bottom: 6px; }
+    ul { padding-left: 20px; margin-bottom: 14px; }
+    ul li { line-height: 1.7; font-size: 14px; color: #d4d4d8; margin-bottom: 4px; }
   </style>
 </head>
 <body>
   <h1>Terms & Disclaimer — Preview</h1>
-  <p class="sub">Pilih versi yang paling cocok untuk website kamu</p>
+  <p class="sub">2 versi baru — tanpa kalimat "melanggar ToS", lengkap & detail</p>
 
   <div class="options">
 
-    <!-- VERSION 1: SHORT -->
+    <!-- VERSION 1 -->
     <div class="option">
-      <span class="badge badge-short">VERSI 1 — Singkat & Padat</span>
-      <h3>Opsi A: Ringkas, langsung ke poin</h3>
-      <div class="lang">🇮🇩 INDONESIA</div>
-      <p>
-        <span class="highlight">WT Market</span> menjual akses akun War Thunder dari pihak ketiga.
-        Semua akun <span class="highlight">tanpa akses email</span> (no email access).
-        Pembelian ini melanggar ToS Gaijin Entertainment — akun dapat di-<span class="highlight">ban, di-reclaim, atau tidak berfungsi</span> kapan saja tanpa pemberitahuan.
-        Dengan membeli, Anda menyetujui seluruh risiko tersebut.
-        <span class="highlight">Garansi:</span> jika login pertama gagal, kami ganti akun baru gratis. Tidak ada refund setelah kredensial dikirim.
-      </p>
-      <div class="en">
-        <div class="lang">🇬🇧 ENGLISH</div>
-        <p>
-          <span class="highlight">WT Market</span> sells third-party War Thunder account access.
-          All accounts are <span class="highlight">without email access</span>.
-          This purchase violates Gaijin Entertainment ToS — accounts may be <span class="highlight">banned, reclaimed, or stop working</span> at any time without notice.
-          By purchasing, you accept all risks.
-          <span class="highlight">Guarantee:</span> free replacement if first login fails. No refunds after credentials are delivered.
-        </p>
-      </div>
-    </div>
-
-    <!-- VERSION 2: MEDIUM -->
-    <div class="option">
-      <span class="badge badge-medium">VERSI 2 — Detail & Profesional</span>
-      <h3>Opsi B: Mencakup semua informasi penting</h3>
-      <div class="lang">🇮🇩 INDONESIA</div>
-      <p>
-        <span class="highlight">WT Market</span> adalah platform jual-beli akun War Thunder pihak ketiga.
-        Kami tidak berafiliasi dengan Gaijin Entertainment.<br><br>
-        <span class="highlight">Kondisi Akun:</span> Semua akun dijual <span class="highlight">tanpa akses email</span> (no email access). Kredensial login diberikan apa adanya.<br><br>
-        <span class="highlight">Risiko:</span> Pembelian akun melanggar Terms of Service Gaijin Entertainment. Akun dapat di-ban, di-reclaim oleh pemilik asli, atau dinonaktifkan kapan saja. WT Market tidak bertanggung jawab atas kehilangan akses setelah kredensial dikirim.<br><br>
-        <span class="highlight">Garansi Login Pertama:</span> Jika kredensial yang diberikan tidak berfungsi pada login pertama, kami akan mengganti dengan akun baru tanpa biaya tambahan. Klaim garansi wajib disertai bukti screenshot/video.<br><br>
-        <span class="highlight">Refund:</span> Tidak ada refund setelah kredensial berhasil dikirim. Pembayaran yang gagal akan otomatis dikembalikan oleh Midtrans.
-      </p>
-      <div class="en">
-        <div class="lang">🇬🇧 ENGLISH</div>
-        <p>
-          <span class="highlight">WT Market</span> is a third-party War Thunder account marketplace.
-          We are not affiliated with Gaijin Entertainment.<br><br>
-          <span class="highlight">Account Condition:</span> All accounts are sold <span class="highlight">without email access</span>. Login credentials are provided as-is.<br><br>
-          <span class="highlight">Risks:</span> Purchasing accounts violates Gaijin Entertainment Terms of Service. Accounts may be banned, reclaimed by original owners, or deactivated at any time. WT Market is not responsible for loss of access after credentials are delivered.<br><br>
-          <span class="highlight">First Login Guarantee:</span> If the provided credentials do not work on first login, we will replace them with a new account at no extra cost. Warranty claims must include screenshot/video proof.<br><br>
-          <span class="highlight">Refunds:</span> No refunds after credentials are successfully delivered. Failed payments are automatically refunded by Midtrans.
-        </p>
-      </div>
-    </div>
-
-    <!-- VERSION 3: LONG -->
-    <div class="option">
-      <span class="badge badge-long">VERSI 3 — Lengkap & Legal</span>
-      <h3>Opsi C: Full disclaimer dengan FAQ</h3>
+      <span class="badge badge-v1">VERSI 1 — Lengkap & Profesional</span>
+      <h3>Opsi A: Detail, mencakup semua aspek</h3>
       <div class="lang">🇮🇩 INDONESIA</div>
       <p>
         <span class="highlight">Tentang WT Market</span><br>
-        WT Market adalah marketplace independen yang menjual akses akun game War Thunder. Kami bukan afiliasi, partner, atau perwakilan resmi Gaijin Entertainment.<br><br>
-        <span class="highlight">Produk yang Dijual</span><br>
-        • Semua akun dijual <span class="highlight">tanpa akses email</span> (no email access).<br>
-        • Kredensial yang diberikan: username/email + password login game.<br>
-        • Stok terbatas dan bersifat first-come first-served.<br><br>
-        <span class="highlight">Risiko Pembelian</span><br>
-        • Pembelian akun melanggar Terms of Service Gaijin Entertainment.<br>
-        • Akun dapat di-<span class="highlight">ban permanen</span> oleh Gaijin kapan saja.<br>
-        • Akun dapat di-<span class="highlight">reclaim</span> oleh pemilik asli melalui sistem recovery Gaijin.<br>
-        • Akun dapat <span class="highlight">tidak berfungsi</span> karena update game, pergantian password, atau alasan lain.<br>
-        • Dengan membeli, Anda <span class="highlight">menerima seluruh risiko</span> di atas tanpa pengecualian.<br><br>
-        <span class="highlight">Garansi</span><br>
-        • <span class="highlight">Garansi Login Pertama:</span> jika kredensial tidak berfungsi saat login pertama, kami ganti akun baru gratis. Klaim dalam 1×24 jam dengan bukti screenshot.<br>
-        • Tidak ada garansi setelah login pertama berhasil.<br>
-        • Tidak ada garansi untuk ban/reclaim/kehilangan akses di kemudian hari.<br><br>
-        <span class="highlight">Pembayaran & Refund</span><br>
-        • Pembayaran diproses melalui Midtrans (QRIS, VA, e-wallet, kartu).<br>
-        • <span class="highlight">Tidak ada refund</span> setelah kredensial dikirim ke pembeli.<br>
-        • Pembayaran gagal/ganda akan otomatis direfund oleh Midtrans.
+        WT Market adalah platform jual-beli akses akun game War Thunder. Kami beroperasi secara independen dan tidak terafiliasi dengan pengembang atau penerbit game manapun.
       </p>
+      <p>
+        <span class="highlight">Produk yang Dijual</span><br>
+        Semua akun yang dijual di platform ini merupakan akun pihak ketiga dengan ketentuan sebagai berikut:
+      </p>
+      <ul>
+        <li>Akun dijual <span class="highlight">tanpa akses email</span> (no email access).</li>
+        <li>Kredensial yang diberikan: username/email + password untuk login ke game.</li>
+        <li>Stok terbatas dan bersifat first-come first-served.</li>
+        <li>Deskripsi produk (level, rank, nation, dsb.) sesuai dengan kondisi saat listing — dapat berubah seiring update game.</li>
+      </ul>
+      <p>
+        <span class="highlight">Risiko yang Perlu Diketahui</span><br>
+        Sebagai pembeli, Anda memahami dan menyetujui bahwa:
+      </p>
+      <ul>
+        <li>Akun pihak ketiga memiliki <span class="highlight">risiko bawaan</span> seperti pembatasan akses, penonaktifan, atau pemulihan oleh pemilik sebelumnya.</li>
+        <li>WT Market <span class="highlight">tidak dapat menjamin</span> ketersediaan akun dalam jangka waktu tertentu setelah pembelian.</li>
+        <li>Harga dapat berubah sewaktu-waktu tanpa pemberitahuan terlebih dahulu.</li>
+      </ul>
+      <p>
+        <span class="highlight">Garansi</span><br>
+        Kami memberikan <span class="highlight">Garansi Login Pertama</span>: jika kredensial yang diberikan tidak berfungsi pada saat login pertama, kami akan mengganti dengan akun baru tanpa biaya tambahan. Ketentuan klaim garansi:
+      </p>
+      <ul>
+        <li>Klaim dilakukan dalam waktu <span class="highlight">1×24 jam</span> setelah pembelian.</li>
+        <li>Wajib menyertakan <span class="highlight">bukti screenshot atau video</span> saat login gagal.</li>
+        <li>Garansi hanya berlaku untuk <span class="highlight">login pertama</span>. Tidak berlaku untuk masalah setelah login berhasil.</li>
+      </ul>
+      <p>
+        <span class="highlight">Pembayaran & Refund</span><br>
+        Pembayaran diproses melalui Midtrans (QRIS, transfer bank, e-wallet, kartu). Dengan melakukan pembelian, Anda menyetujui bahwa:
+      </p>
+      <ul>
+        <li><span class="highlight">Tidak ada refund</span> setelah kredensial berhasil dikirim ke pembeli.</li>
+        <li>Pembayaran yang gagal, dibatalkan, atau ganda akan <span class="highlight">otomatis dikembalikan</span> oleh sistem pembayaran Midtrans.</li>
+        <li>Semua harga dalam Rupiah Indonesia (IDR).</li>
+      </ul>
+      <p>
+        <span class="highlight">Privasi</span><br>
+        Data pembeli (email, WhatsApp, informasi pembayaran) hanya digunakan untuk keperluan transaksi dan tidak dibagikan ke pihak ketiga.
+      </p>
+
       <div class="en">
         <div class="lang">🇬🇧 ENGLISH</div>
         <p>
           <span class="highlight">About WT Market</span><br>
-          WT Market is an independent marketplace selling War Thunder game account access. We are not affiliated, partnered with, or officially representing Gaijin Entertainment.<br><br>
+          WT Market is a third-party War Thunder account marketplace. We operate independently and are not affiliated with any game developer or publisher.
+        </p>
+        <p>
           <span class="highlight">Products Sold</span><br>
-          • All accounts are sold <span class="highlight">without email access</span>.<br>
-          • Credentials provided: username/email + game login password.<br>
-          • Stock is limited and first-come first-served.<br><br>
-          <span class="highlight">Purchase Risks</span><br>
-          • Purchasing accounts violates Gaijin Entertainment Terms of Service.<br>
-          • Accounts may be <span class="highlight">permanently banned</span> by Gaijin at any time.<br>
-          • Accounts may be <span class="highlight">reclaimed</span> by original owners via Gaijin recovery system.<br>
-          • Accounts may <span class="highlight">stop working</span> due to game updates, password changes, or other reasons.<br>
-          • By purchasing, you <span class="highlight">accept all risks</span> above without exception.<br><br>
+          All accounts sold on this platform are third-party accounts with the following conditions:
+        </p>
+        <ul>
+          <li>Accounts are sold <span class="highlight">without email access</span>.</li>
+          <li>Credentials provided: username/email + password for game login.</li>
+          <li>Stock is limited and first-come first-served.</li>
+          <li>Product descriptions (level, rank, nation, etc.) reflect condition at time of listing — may change with game updates.</li>
+        </ul>
+        <p>
+          <span class="highlight">Risk Acknowledgement</span><br>
+          As a buyer, you understand and agree that:
+        </p>
+        <ul>
+          <li>Third-party accounts carry <span class="highlight">inherent risks</span> such as access restrictions, deactivation, or recovery by previous owners.</li>
+          <li>WT Market <span class="highlight">cannot guarantee</span> long-term account availability after purchase.</li>
+          <li>Prices may change at any time without prior notice.</li>
+        </ul>
+        <p>
           <span class="highlight">Guarantee</span><br>
-          • <span class="highlight">First Login Guarantee:</span> if credentials don't work on first login, we replace with a new account free of charge. Claim within 24 hours with screenshot proof.<br>
-          • No guarantee after first successful login.<br>
-          • No guarantee for future bans/reclaims/loss of access.<br><br>
+          We provide a <span class="highlight">First Login Guarantee</span>: if the provided credentials do not work on first login, we will replace them with a new account at no extra cost. Claim conditions:
+        </p>
+        <ul>
+          <li>Claims must be made within <span class="highlight">24 hours</span> of purchase.</li>
+          <li>Must include <span class="highlight">screenshot or video proof</span> of failed login.</li>
+          <li>Guarantee applies to <span class="highlight">first login only</span>. Does not cover issues after successful login.</li>
+        </ul>
+        <p>
           <span class="highlight">Payment & Refunds</span><br>
-          • Payments processed via Midtrans (QRIS, bank transfer, e-wallet, cards).<br>
-          • <span class="highlight">No refunds</span> after credentials are delivered to buyer.<br>
-          • Failed/duplicate payments are automatically refunded by Midtrans.
+          Payments are processed through Midtrans (QRIS, bank transfer, e-wallet, cards). By purchasing, you agree that:
+        </p>
+        <ul>
+          <li><span class="highlight">No refunds</span> after credentials are successfully delivered to the buyer.</li>
+          <li>Failed, cancelled, or duplicate payments will be <span class="highlight">automatically refunded</span> by Midtrans.</li>
+          <li>All prices are in Indonesian Rupiah (IDR).</li>
+        </ul>
+        <p>
+          <span class="highlight">Privacy</span><br>
+          Buyer data (email, WhatsApp, payment information) is used solely for transaction purposes and is not shared with third parties.
+        </p>
+      </div>
+    </div>
+
+    <!-- VERSION 2 -->
+    <div class="option">
+      <span class="badge badge-v2">VERSI 2 — Singkat tapi Tetap Detail</span>
+      <h3>Opsi B: Lebih ringkas, tetap informatif</h3>
+      <div class="lang">🇮🇩 INDONESIA</div>
+      <p>
+        <span class="highlight">WT Market</span> adalah platform independen yang menyediakan akses akun game War Thunder dari pihak ketiga. Kami tidak terafiliasi dengan pengembang atau penerbit game manapun.
+      </p>
+      <p>
+        <span class="highlight">Produk:</span> Semua akun dijual <span class="highlight">tanpa akses email</span> (no email access). Kredensial diberikan berupa username/email dan password login. Stok bersifat terbatas. Deskripsi produk sesuai kondisi saat listing.
+      </p>
+      <p>
+        <span class="highlight">Risiko:</span> Akun pihak ketiga memiliki risiko bawaan — termasuk pembatasan akses, penonaktifan, atau pemulihan oleh pemilik sebelumnya. WT Market tidak menjamin ketersediaan akun dalam jangka panjang. Dengan membeli, Anda menerima seluruh risiko tersebut.
+      </p>
+      <p>
+        <span class="highlight">Garansi Login Pertama:</span> Jika kredensial gagal saat login pertama, kami ganti akun baru gratis. Klaim dalam 1×24 jam dengan bukti screenshot/video. Tidak berlaku setelah login pertama berhasil.
+      </p>
+      <p>
+        <span class="highlight">Pembayaran:</span> Diproses via Midtrans. <span class="highlight">Tidak ada refund</span> setelah kredensial dikirim. Pembayaran gagal otomatis dikembalikan. Semua harga dalam IDR.
+      </p>
+
+      <div class="en">
+        <div class="lang">🇬🇧 ENGLISH</div>
+        <p>
+          <span class="highlight">WT Market</span> is an independent platform providing third-party War Thunder account access. We are not affiliated with any game developer or publisher.
+        </p>
+        <p>
+          <span class="highlight">Products:</span> All accounts sold <span class="highlight">without email access</span>. Credentials provided: username/email + password. Limited stock. Product descriptions reflect listing condition.
+        </p>
+        <p>
+          <span class="highlight">Risks:</span> Third-party accounts carry inherent risks — including access restrictions, deactivation, or recovery by previous owners. WT Market does not guarantee long-term availability. By purchasing, you accept all such risks.
+        </p>
+        <p>
+          <span class="highlight">First Login Guarantee:</span> If credentials fail on first login, free replacement. Claim within 24 hours with screenshot/video proof. Does not apply after first successful login.
+        </p>
+        <p>
+          <span class="highlight">Payment:</span> Processed via Midtrans. <span class="highlight">No refunds</span> after credentials delivered. Failed payments auto-refunded. All prices in IDR.
         </p>
       </div>
     </div>
