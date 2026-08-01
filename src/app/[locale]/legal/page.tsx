@@ -7,10 +7,28 @@ export default async function LegalPage({ params }: Props) {
   setRequestLocale(locale);
   const t = await getTranslations();
 
+  const body = t("legal.body");
+  const sections = body.split("\n\n");
+
   return (
-    <div className="card mx-auto max-w-3xl space-y-4 p-6 sm:p-8">
+    <div className="mx-auto max-w-3xl space-y-6">
       <h1 className="text-3xl font-bold">{t("legal.title")}</h1>
-      <p className="leading-relaxed text-muted">{t("legal.body")}</p>
+      <div className="card space-y-5 p-6 sm:p-8 leading-relaxed">
+        {sections.map((section, i) => {
+          const lines = section.split("\n").filter(Boolean);
+          const title = lines[0] || "";
+          const content = lines.slice(1);
+
+          return (
+            <div key={i}>
+              <h2 className="mb-2 font-semibold text-accent">{title}</h2>
+              {content.map((line, j) => (
+                <p key={j} className="text-muted">{line}</p>
+              ))}
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }
