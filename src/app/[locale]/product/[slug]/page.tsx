@@ -49,8 +49,11 @@ export default async function ProductPage({ params }: Props) {
 
       <div className="grid gap-6 lg:grid-cols-2">
         <div className="card glow-card reveal-up scanline relative min-h-64 overflow-hidden p-6">
+          {product.imageUrl ? (
+            <img src={product.imageUrl} alt={title} className="absolute inset-0 h-full w-full object-cover" />
+          ) : null}
           <div className="absolute inset-0 opacity-50 [background-image:radial-gradient(circle_at_20%_20%,#f59e0b33,transparent_40%),radial-gradient(circle_at_80%_80%,#3b82f633,transparent_40%)]" />
-          <div className="relative flex h-full flex-col justify-end gap-3">
+          <div className="relative z-10 flex h-full flex-col justify-end gap-3">
             <span className="badge badge-warn w-fit">{categoryLabel}</span>
             <h1 className="text-3xl font-bold">{title}</h1>
           </div>
