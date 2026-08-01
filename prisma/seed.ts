@@ -58,7 +58,7 @@ async function main() {
       category: "RANK",
       nation: "ANY",
       priceIdr: 35_000,
-      imageUrl: "/images/products/thumb/wt-jet.webp",
+      imageUrl: "/images/products/thumb/wt-jet-aircraft.webp",
       stock: [],
     },
   ];
