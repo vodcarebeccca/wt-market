@@ -46,6 +46,21 @@ async function main() {
         "rank10_tank_005@noemail.test:Rank10Tank!",
       ],
     },
+    // ===== RANK 10.0 AIRCRAFT =====
+    {
+      slug: "wt-rank-10-0-aircraft",
+      titleId: "WT Rank 10.0 Aircraft",
+      titleEn: "WT Rank 10.0 Aircraft",
+      descId: "Akun War Thunder Rank 10.0 aircraft — full end-game jet access. TANPA email access (no email). GARANSI: jika login pertama gagal, langsung ganti akun baru tanpa biaya tambahan.",
+      descEn: "War Thunder account Rank 10.0 aircraft — full end-game jet access. NO email access. GUARANTEE: if first login fails, free replacement with a new account.",
+      minRank: 10,
+      maxRank: 10,
+      category: "RANK",
+      nation: "ANY",
+      priceIdr: 35_000,
+      imageUrl: "/images/products/thumb/wt-jet.webp",
+      stock: [],
+    },
   ];
 
   for (const p of products) {
