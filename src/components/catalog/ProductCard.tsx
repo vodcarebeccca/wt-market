@@ -23,7 +23,7 @@ export function ProductCard({ locale, product, labels }: ProductCardProps) {
 
   return (
     <Link
-      href={`/${locale}/product/${product.slug}`}
+      href={`/product/${product.slug}`}
       className="card glow-card group flex flex-col overflow-hidden transition duration-300 hover:-translate-y-1 hover:border-accent/60 hover:shadow-[0_24px_70px_rgba(245,158,11,0.14)]"
     >
       <div className="scanline relative flex h-36 items-end bg-gradient-to-br from-zinc-800 via-zinc-900 to-black p-4">
