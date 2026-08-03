@@ -15,6 +15,17 @@ export default async function HomePage({ params }: Props) {
   return (
     <div className="space-y-12">
       <section className="glow-card reveal-up scanline relative overflow-hidden rounded-3xl border border-border bg-card p-8 sm:p-12">
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="absolute inset-0 h-full w-full object-cover opacity-20"
+          poster="/videos/war-thunder-trailer-poster.webp"
+        >
+          <source src="/videos/war-thunder-trailer.mp4" type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-gradient-to-r from-background/90 via-background/60 to-transparent" />
         <div className="absolute inset-0 opacity-40 [background-image:radial-gradient(circle_at_10%_10%,#f59e0b44,transparent_35%),radial-gradient(circle_at_90%_20%,#2563eb33,transparent_40%)]" />
         <div className="float-slow absolute right-8 top-8 hidden h-28 w-28 rounded-full border border-accent/30 bg-accent/10 blur-sm sm:block" />
         <div className="relative max-w-2xl space-y-4">
