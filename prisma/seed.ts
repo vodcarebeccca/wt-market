@@ -18,24 +18,20 @@ async function main() {
   await prisma.orderItem.deleteMany();
   await prisma.stockItem.deleteMany();
   await prisma.order.deleteMany();
+  await prisma.review.deleteMany();
   await prisma.product.deleteMany();
 
-  // Harga JUAL (IDR) - sudah include margin profit
-  // Target: beli ~$0.10-3.50, jual Rp 3.000 - 100.000
-  // Margin ~3-5x cost untuk absorb risk (chargeback, ban, refund)
+  // ===== 2 PRODUK — WT Rank 10.0 =====
 
   const products = [
-    // ===== RANK 10.0 TANK =====
     {
       slug: "wt-rank-10-0-tank",
       titleId: "WT Rank 10.0 Tank",
       titleEn: "WT Rank 10.0 Tank",
       descId: "Akun War Thunder tanpa email access. Rank 10.0 tank — full end-game MBT access. Siap battle modern.",
       descEn: "War Thunder account without email access. Rank 10.0 tank — full end-game MBT access. Ready for modern battles.",
-      minRank: 10,
-      maxRank: 10,
-      category: "RANK",
-      nation: "ANY",
+      minRank: 10, maxRank: 10,
+      category: "RANK", nation: "ANY",
       priceIdr: 40_000,
       imageUrl: "/images/products/thumb/wt-tank-battle.webp",
       stock: [
@@ -46,17 +42,14 @@ async function main() {
         "rank10_tank_005@noemail.test:Rank10Tank!",
       ],
     },
-    // ===== RANK 10.0 AIRCRAFT =====
     {
       slug: "wt-rank-10-0-aircraft",
       titleId: "WT Rank 10.0 Aircraft",
       titleEn: "WT Rank 10.0 Aircraft",
       descId: "Akun War Thunder Rank 10.0 aircraft — full end-game jet access. TANPA email access (no email). GARANSI: jika login pertama gagal, langsung ganti akun baru tanpa biaya tambahan.",
       descEn: "War Thunder account Rank 10.0 aircraft — full end-game jet access. NO email access. GUARANTEE: if first login fails, free replacement with a new account.",
-      minRank: 10,
-      maxRank: 10,
-      category: "RANK",
-      nation: "ANY",
+      minRank: 10, maxRank: 10,
+      category: "RANK", nation: "ANY",
       priceIdr: 35_000,
       imageUrl: "/images/products/thumb/wt-jet-aircraft.webp",
       stock: [],
@@ -80,6 +73,8 @@ async function main() {
   console.log("Seed OK");
   console.log(`Admin: ${email} / ${password}`);
   console.log(`Products: ${products.length}`);
+  const totalStock = products.reduce((s, p) => s + p.stock.length, 0);
+  console.log(`Stock items: ${totalStock}`);
 }
 
 main()
