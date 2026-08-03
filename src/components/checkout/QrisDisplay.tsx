@@ -41,7 +41,7 @@ export function QrisDisplay({
     QRCode.toCanvas(canvasRef.current, qrisString, {
       width: 280,
       margin: 2,
-      color: { dark: "#FFFFFF", light: "#000000" },
+      color: { dark: "#000000", light: "#FFFFFF" },
     });
   }, [qrisString]);
 
