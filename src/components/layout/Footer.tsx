@@ -1,4 +1,3 @@
-import NextLink from "next/link";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/routing";
 
@@ -18,9 +17,6 @@ export async function Footer() {
             <Link href="/legal" className="hover:text-accent">
               {t("nav.legal")}
             </Link>
-            <NextLink href="/admin" className="hover:text-accent">
-              {t("nav.admin")}
-            </NextLink>
           </div>
         </div>
         <p className="max-w-3xl text-xs leading-relaxed">{t("footer.disclaimer")}</p>
