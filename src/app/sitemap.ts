@@ -7,7 +7,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const productUrls = products.flatMap((p) => [
     {
-      url: `${baseUrl}/${p.category.toLowerCase()}/${p.slug}`,
+      url: `${baseUrl}/id/product/${p.slug}`,
+      lastModified: p.updatedAt,
+      changeFrequency: "weekly" as const,
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/en/product/${p.slug}`,
       lastModified: p.updatedAt,
       changeFrequency: "weekly" as const,
       priority: 0.8,

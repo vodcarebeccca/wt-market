@@ -21,8 +21,7 @@ export default async function HomePage({ params }: Props) {
           loop
           playsInline
           className="absolute inset-0 h-full w-full object-cover opacity-20"
-          poster="/videos/war-thunder-trailer-poster.webp"
-        >
+                  >
           <source src="/videos/war-thunder-trailer.mp4" type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-gradient-to-r from-background/90 via-background/60 to-transparent" />
