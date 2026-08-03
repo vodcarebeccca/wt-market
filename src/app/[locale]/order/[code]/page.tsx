@@ -3,7 +3,7 @@ import { headers } from "next/headers";
 import { prisma } from "@/lib/prisma";
 import { formatPricePair } from "@/lib/money";
 import { rateLimit } from "@/lib/rate-limit";
-import { SnapPayButton } from "@/components/checkout/SnapPayButton";
+import { QrisDisplay } from "@/components/checkout/QrisDisplay";
 
 type Props = {
   params: Promise<{ locale: string; code: string }>;
@@ -65,6 +65,7 @@ export default async function OrderPage({ params, searchParams }: Props) {
   const credentials = canShowCreds
     ? order.items.map((i) => i.stockItem?.credential).filter(Boolean)
     : [];
+  const qrisString = order.midtransSnapToken || "";
 
   return (
     <div className="mx-auto max-w-xl space-y-4">
@@ -107,17 +108,26 @@ export default async function OrderPage({ params, searchParams }: Props) {
         {order.status === "PENDING" && (
           <div className="space-y-3 rounded-xl border border-border bg-black/30 p-4">
             <p className="text-sm text-muted">{t("order.waitingPayment")}</p>
-            {order.midtransSnapToken ? (
-              <SnapPayButton
-                snapToken={order.midtransSnapToken}
+            {qrisString ? (
+              <QrisDisplay
+                qrisString={qrisString}
+                amountIdr={order.totalIdr}
                 orderCode={order.code}
                 accessToken={order.accessToken}
                 locale={locale}
-                label={t("order.continuePay")}
+                labels={{
+                  qrisTitle: t("order.qrisTitle"),
+                  qrisInstruction: t("order.qrisInstruction"),
+                  uploadProof: t("order.uploadProof"),
+                  iHavePaid: t("order.iHavePaid"),
+                  proofUploaded: t("order.proofUploaded"),
+                  uploading: t("order.uploading"),
+                  uploadError: t("order.uploadError"),
+                }}
               />
             ) : (
               <p className="text-xs text-amber-300">
-                Midtrans belum aktif. Hubungi admin / tunggu mark paid manual.
+                {t("order.noPaymentMethod")}
               </p>
             )}
           </div>

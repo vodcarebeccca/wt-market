@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { useRouter } from "@/i18n/routing";
 import { createCheckoutOrder } from "@/actions/checkout";
-import { SnapPayButton } from "./SnapPayButton";
 import { formatPricePair } from "@/lib/money";
 
 type Props = {
@@ -42,9 +41,6 @@ export function CheckoutForm({
   const [agree, setAgree] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [snapToken, setSnapToken] = useState<string | null>(null);
-  const [orderMeta, setOrderMeta] = useState<{ code: string; token: string } | null>(null);
-  const [manualPay, setManualPay] = useState(false);
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -75,17 +71,10 @@ export function CheckoutForm({
         return;
       }
 
-      setOrderMeta({ code: result.orderCode, token: result.accessToken });
-      setManualPay(result.manualPay);
-      setSnapToken(result.snapToken);
-
-      if (result.manualPay || !result.snapToken) {
-        router.push(`/order/${result.orderCode}?token=${result.accessToken}`);
-        return;
-      }
+      // Redirect to order page — QRIS will be displayed there
+      router.push(`/order/${result.orderCode}?token=${result.accessToken}`);
     } catch {
       setError(labels.error);
-    } finally {
       setLoading(false);
     }
   }
@@ -103,70 +92,45 @@ export function CheckoutForm({
         <p className="text-xs text-muted">≈ {price.usd}</p>
       </div>
 
-      {!snapToken ? (
-        <form onSubmit={onSubmit} className="space-y-4">
-          <label className="block space-y-1 text-sm">
-            <span className="text-muted">{labels.email}</span>
-            <input
-              className="input"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="you@email.com"
-            />
-          </label>
-          <label className="block space-y-1 text-sm">
-            <span className="text-muted">{labels.whatsapp}</span>
-            <input
-              className="input"
-              value={whatsapp}
-              onChange={(e) => setWhatsapp(e.target.value)}
-              placeholder="08xxxxxxxxxx"
-            />
-          </label>
+      <form onSubmit={onSubmit} className="space-y-4">
+        <label className="block space-y-1 text-sm">
+          <span className="text-muted">{labels.email}</span>
+          <input
+            className="input"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="you@email.com"
+          />
+        </label>
+        <label className="block space-y-1 text-sm">
+          <span className="text-muted">{labels.whatsapp}</span>
+          <input
+            className="input"
+            value={whatsapp}
+            onChange={(e) => setWhatsapp(e.target.value)}
+            placeholder="08xxxxxxxxxx"
+          />
+        </label>
 
-          <label className="flex items-start gap-2 text-sm text-muted">
-            <input
-              type="checkbox"
-              checked={agree}
-              onChange={(e) => setAgree(e.target.checked)}
-              className="mt-1"
-            />
-            <span>{labels.agree}</span>
-          </label>
+        <label className="flex items-start gap-2 text-sm text-muted">
+          <input
+            type="checkbox"
+            checked={agree}
+            onChange={(e) => setAgree(e.target.checked)}
+            className="mt-1"
+          />
+          <span>{labels.agree}</span>
+        </label>
 
-          <p className="text-xs text-muted">{labels.note}</p>
+        <p className="text-xs text-muted">{labels.note}</p>
 
-          {error && <p className="text-sm text-danger">{error}</p>}
+        {error && <p className="text-sm text-danger">{error}</p>}
 
-          <button type="submit" className="btn btn-primary w-full" disabled={loading || !inStock}>
-            {loading ? labels.creating : labels.pay}
-          </button>
-        </form>
-      ) : (
-        <div className="space-y-3">
-          {orderMeta && (
-            <p className="text-sm text-muted">
-              Order <span className="font-mono text-foreground">{orderMeta.code}</span>
-            </p>
-          )}
-          {manualPay ? (
-            <p className="text-sm text-amber-300">
-              Midtrans belum dikonfigurasi. Order dibuat — admin bisa mark paid.
-            </p>
-          ) : (
-            orderMeta && (
-              <SnapPayButton
-                snapToken={snapToken}
-                orderCode={orderMeta.code}
-                accessToken={orderMeta.token}
-                locale={locale}
-                label={labels.pay}
-              />
-            )
-          )}
-        </div>
-      )}
+        <button type="submit" className="btn btn-primary w-full" disabled={loading || !inStock}>
+          {loading ? labels.creating : labels.pay}
+        </button>
+      </form>
     </div>
   );
 }

@@ -111,7 +111,7 @@ export async function deliverOrder(orderId: string): Promise<{
 
 export async function markOrderPaidAndDeliver(input: {
   orderId: string;
-  provider: "MIDTRANS" | "MANUAL";
+  provider: "MIDTRANS" | "MANUAL" | "QRIS";
   providerRef?: string;
   amountIdr?: number;
   rawNotification?: string;

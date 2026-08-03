@@ -63,7 +63,7 @@ export default async function AdminOrderDetailPage({ params, searchParams }: Pro
               <span className="text-muted">Locale:</span> {order.locale}
             </p>
             <p>
-              <span className="text-muted">Midtrans order id:</span> {order.midtransOrderId || "—"}
+              <span className="text-muted">Order ref:</span> {order.midtransOrderId || order.code || "—"}
             </p>
             {order.adminNote && (
               <p>

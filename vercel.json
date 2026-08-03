@@ -1,0 +1,12 @@
+{
+  "crons": [
+    {
+      "path": "/api/cron/check-payments?cron=1",
+      "schedule": "*/2 * * * *"
+    },
+    {
+      "path": "/api/cron/release-stale-reservations?cron=1",
+      "schedule": "*/5 * * * *"
+    }
+  ]
+}

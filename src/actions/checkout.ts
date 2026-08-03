@@ -3,7 +3,7 @@
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { generateAccessToken, generateOrderCode } from "@/lib/order-code";
-import { createSnapTransaction, hasValidMidtransKeys } from "@/lib/midtrans";
+import { generateDynamicQris, getStaticQris } from "@/lib/qris";
 
 const schema = z.object({
   productId: z.string().min(1),
@@ -18,9 +18,7 @@ export type CheckoutResult =
       ok: true;
       orderCode: string;
       accessToken: string;
-      snapToken: string | null;
-      redirectUrl: string | null;
-      manualPay: boolean;
+      qrisString: string;
     }
   | { ok: false; error: string };
 
@@ -117,44 +115,32 @@ export async function createCheckoutOrder(input: {
     return { ok: false, error: reserveResult.error };
   }
 
-  let snapToken: string | null = null;
-  let redirectUrl: string | null = null;
-  let manualPay = false;
-
-  if (hasValidMidtransKeys()) {
-    try {
-      const snap = await createSnapTransaction({
-        orderId: code,
-        amountIdr: reserveResult.priceIdr,
-        itemName: reserveResult.title,
-        customerEmail: parsed.data.buyerEmail,
-        customerPhone: parsed.data.buyerWhatsapp,
-      });
-      snapToken = snap.token;
-      redirectUrl = snap.redirectUrl;
-      await prisma.order.update({
-        where: { id: reserveResult.orderId },
-        data: { midtransSnapToken: snapToken },
-      });
-    } catch (err) {
-      console.error("Midtrans create failed", err);
-      manualPay = true;
-      // Release reserved stock so it's not permanently locked if Midtrans is down
-      await prisma.stockItem.updateMany({
-        where: { orderItemId: reserveResult.orderItemId },
-        data: { status: "AVAILABLE", orderItemId: null },
-      });
-    }
-  } else {
-    manualPay = true;
+  // Generate dynamic QRIS for this order
+  let qrisString = "";
+  try {
+    const staticQris = getStaticQris();
+    qrisString = generateDynamicQris(staticQris, reserveResult.priceIdr);
+  } catch (err) {
+    console.error("QRIS generation failed", err);
+    // Fallback: still create order but without QRIS
+    return {
+      ok: true,
+      orderCode: code,
+      accessToken,
+      qrisString: "",
+    };
   }
+
+  // Save QRIS string to the order
+  await prisma.order.update({
+    where: { id: reserveResult.orderId },
+    data: { midtransSnapToken: qrisString },
+  });
 
   return {
     ok: true,
     orderCode: code,
     accessToken,
-    snapToken,
-    redirectUrl,
-    manualPay,
+    qrisString,
   };
 }
