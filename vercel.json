@@ -1,3 +1,1 @@
-{
-  "_note": "Vercel Cron disabled on Hobby plan (daily only). Use external scheduler (cron-job.org) hitting /api/cron/check-payments with Bearer CRON_SECRET, or admin manual verify via proof uploads."
-}
+{}
