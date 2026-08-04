@@ -52,24 +52,22 @@ model StockItem {
 }
 
 model Order {
-  id                String      @id @default(cuid())
-  code              String      @unique
-  accessToken       String      @unique
-  buyerEmail        String?
-  buyerWhatsapp     String?
-  locale            String      @default("id")
-  status            String      @default("PENDING")
-  totalIdr          Int
-  adminNote         String?
-  midtransOrderId   String?     @unique
-  midtransSnapToken String?
-  paidAt            DateTime?
-  deliveredAt       DateTime?
-  createdAt         DateTime    @default(now())
-  updatedAt         DateTime    @updatedAt
-  items             OrderItem[]
-  payments          Payment[]
-  reviews           Review[]
+  id            String      @id @default(cuid())
+  code          String      @unique
+  accessToken   String      @unique
+  buyerEmail    String?
+  buyerWhatsapp String?
+  locale        String      @default("id")
+  status        String      @default("PENDING")
+  totalIdr      Int
+  adminNote     String?
+  paidAt        DateTime?
+  deliveredAt   DateTime?
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  items         OrderItem[]
+  payments      Payment[]
+  reviews       Review[]
 }
 
 model OrderItem {
@@ -97,44 +95,32 @@ model Payment {
 }
 
 model Review {
-  id          String   @id @default(cuid())
-  productId   String
-  product     Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
-  orderId     String
-  order       Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  buyerEmail  String?
-  rating      Int
-  comment     String
-  status      String   @default("PENDING")
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id         String   @id @default(cuid())
+  productId  String
+  product    Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  orderId    String
+  order      Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  buyerEmail String?
+  rating     Int
+  comment    String
+  status     String   @default("PENDING")
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 
   @@index([productId, status])
 }
 
-model GoBizConfig {
-  id           String   @id @default(cuid())
-  accessToken  String
-  refreshToken String?
-  merchantId   String
-  expiresAt    DateTime
-  email        String?
-  uniqueId     String?
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-}
-
 model DiscountCode {
-  id              String   @id @default(cuid())
-  code            String   @unique
-  type            String   @default("PERCENT")
-  value           Int
-  minPurchaseIdr  Int      @default(0)
-  maxDiscountIdr  Int?
-  usageLimit      Int      @default(0)
-  usedCount       Int      @default(0)
-  isActive        Boolean  @default(true)
-  expiresAt       DateTime?
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  id             String    @id @default(cuid())
+  code           String    @unique
+  type           String    @default("PERCENT")
+  value          Int
+  minPurchaseIdr Int       @default(0)
+  maxDiscountIdr Int?
+  usageLimit     Int       @default(0)
+  usedCount      Int       @default(0)
+  isActive       Boolean   @default(true)
+  expiresAt      DateTime?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
 }

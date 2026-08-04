@@ -3,7 +3,7 @@ import { headers } from "next/headers";
 import { prisma } from "@/lib/prisma";
 import { formatPricePair } from "@/lib/money";
 import { rateLimit } from "@/lib/rate-limit";
-import { QrisDisplay } from "@/components/checkout/QrisDisplay";
+import { createWhatsAppPaymentUrl } from "@/lib/payment-config";
 
 type Props = {
   params: Promise<{ locale: string; code: string }>;
@@ -61,11 +61,17 @@ export default async function OrderPage({ params, searchParams }: Props) {
   }
 
   const price = formatPricePair(order.totalIdr);
+  const productTitle = order.items[0]?.productTitle || "WT Market order";
+  const whatsappPaymentUrl = createWhatsAppPaymentUrl({
+    orderCode: order.code,
+    productTitle,
+    totalIdr: order.totalIdr,
+    buyerWhatsapp: order.buyerWhatsapp,
+  });
   const canShowCreds = order.status === "DELIVERED";
   const credentials = canShowCreds
     ? order.items.map((i) => i.stockItem?.credential).filter(Boolean)
     : [];
-  const qrisString = order.midtransSnapToken || "";
 
   return (
     <div className="mx-auto max-w-xl space-y-4">
@@ -106,30 +112,20 @@ export default async function OrderPage({ params, searchParams }: Props) {
         </dl>
 
         {order.status === "PENDING" && (
-          <div className="space-y-3 rounded-xl border border-border bg-black/30 p-4">
-            <p className="text-sm text-muted">{t("order.waitingPayment")}</p>
-            {qrisString ? (
-              <QrisDisplay
-                qrisString={qrisString}
-                amountIdr={order.totalIdr}
-                orderCode={order.code}
-                accessToken={order.accessToken}
-                locale={locale}
-                labels={{
-                  qrisTitle: t("order.qrisTitle"),
-                  qrisInstruction: t("order.qrisInstruction"),
-                  uploadProof: t("order.uploadProof"),
-                  iHavePaid: t("order.iHavePaid"),
-                  proofUploaded: t("order.proofUploaded"),
-                  uploading: t("order.uploading"),
-                  uploadError: t("order.uploadError"),
-                }}
-              />
-            ) : (
-              <p className="text-xs text-amber-300">
-                {t("order.noPaymentMethod")}
-              </p>
-            )}
+          <div className="space-y-4 rounded-xl border border-border bg-black/30 p-4">
+            <div className="space-y-1">
+              <h2 className="text-base font-semibold text-foreground">{t("order.whatsappTitle")}</h2>
+              <p className="text-sm text-muted">{t("order.waitingPayment")}</p>
+            </div>
+            <a
+              href={whatsappPaymentUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-primary flex min-h-11 w-full items-center justify-center text-center"
+            >
+              {t("order.whatsappButton")}
+            </a>
+            <p className="text-xs text-amber-200">{t("order.whatsappHint")}</p>
           </div>
         )}
 

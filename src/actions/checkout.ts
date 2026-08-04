@@ -3,7 +3,6 @@
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { generateAccessToken, generateOrderCode } from "@/lib/order-code";
-import { generateDynamicQris, getStaticQris } from "@/lib/qris";
 
 const schema = z.object({
   productId: z.string().min(1),
@@ -18,7 +17,6 @@ export type CheckoutResult =
       ok: true;
       orderCode: string;
       accessToken: string;
-      qrisString: string;
     }
   | { ok: false; error: string };
 
@@ -77,7 +75,6 @@ export async function createCheckoutOrder(input: {
         locale: parsed.data.locale,
         status: "PENDING",
         totalIdr: product.priceIdr,
-        midtransOrderId: code,
       },
     });
 
@@ -115,32 +112,9 @@ export async function createCheckoutOrder(input: {
     return { ok: false, error: reserveResult.error };
   }
 
-  // Generate dynamic QRIS for this order
-  let qrisString = "";
-  try {
-    const staticQris = getStaticQris();
-    qrisString = generateDynamicQris(staticQris, reserveResult.priceIdr);
-  } catch (err) {
-    console.error("QRIS generation failed", err);
-    // Fallback: still create order but without QRIS
-    return {
-      ok: true,
-      orderCode: code,
-      accessToken,
-      qrisString: "",
-    };
-  }
-
-  // Save QRIS string to the order
-  await prisma.order.update({
-    where: { id: reserveResult.orderId },
-    data: { midtransSnapToken: qrisString },
-  });
-
   return {
     ok: true,
     orderCode: code,
     accessToken,
-    qrisString,
   };
 }

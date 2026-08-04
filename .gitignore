@@ -44,7 +44,7 @@ prisma/dev.db-journal
 # vercel
 .vercel
 
-# gobiz local session cache (contains OTP tokens)
+# local auth/session caches
 .gobiz-session.json
 
 # typescript

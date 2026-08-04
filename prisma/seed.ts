@@ -70,29 +70,6 @@ async function main() {
     }
   }
 
-  // Seed GoBiz config from env vars (if present and not already in DB)
-  const gobizToken = process.env.GOBIZ_ACCESS_TOKEN;
-  const gobizMerchantId = process.env.GOBIZ_MERCHANT_ID;
-  const gobizRefresh = process.env.GOBIZ_REFRESH_TOKEN;
-  const gobizEmail = process.env.GOBIZ_EMAIL;
-
-  if (gobizToken && gobizMerchantId) {
-    const existing = await prisma.goBizConfig.findFirst();
-    if (!existing) {
-      await prisma.goBizConfig.create({
-        data: {
-          accessToken: gobizToken,
-          refreshToken: gobizRefresh || null,
-          merchantId: gobizMerchantId,
-          expiresAt: new Date(Date.now() + 86_400_000), // 24h from now
-          email: gobizEmail || null,
-          uniqueId: null,
-        },
-      });
-      console.log("GoBiz config seeded from env vars");
-    }
-  }
-
   console.log("Seed OK");
   console.log(`Admin: ${email} / ${password}`);
   console.log(`Products: ${products.length}`);

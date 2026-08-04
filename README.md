@@ -1,12 +1,12 @@
 # WT Market
 
-Toko online akun War Thunder (Next.js + Prisma SQLite + Midtrans).
+Toko online akun War Thunder (Next.js + Prisma PostgreSQL + pembayaran manual WhatsApp).
 
 ## Fitur
 
 - Katalog bilingual ID/EN + filter (kategori, nation, level, rank, harga)
 - Admin: produk, stok bulk paste/upload, order, mark paid
-- Auto-delivery kredensial setelah bayar (webhook Midtrans atau mark paid manual)
+- Pembayaran manual via WhatsApp admin, lalu kredensial dikirim setelah admin mark paid
 - Harga IDR primary + tampilan USD
 
 ## Setup
@@ -26,19 +26,16 @@ Buka:
 - Admin: http://localhost:3000/admin  
   Default: `admin@wtmarket.local` / `admin123`
 
-## Midtrans
+## Pembayaran manual WhatsApp
 
-1. Daftar Midtrans Sandbox
-2. Isi di `.env`: `MIDTRANS_SERVER_KEY`, `MIDTRANS_CLIENT_KEY`, `NEXT_PUBLIC_MIDTRANS_CLIENT_KEY`
-3. Webhook URL: `https://<public-url>/api/midtrans/notification` (cloudflared/ngrok saat local)
-4. Tanpa key valid, order tetap dibuat — admin bisa **Mark paid + deliver**
-
-Kartu sandbox: `4811 1111 1111 1114` / CVV `123` / OTP `112233`
+1. Buyer checkout dan order dibuat dengan status `PENDING`
+2. Buyer diarahkan ke `wa.me/6285767503449` dengan detail order
+3. Admin cek pembayaran manual, lalu klik **Mark paid + deliver** di panel admin
 
 ## Alur jual
 
 1. Admin tambah produk + import stok `email:password` per baris
-2. Buyer checkout → bayar Midtrans (atau admin mark paid)
+2. Buyer checkout → chat admin via WhatsApp untuk pembayaran manual
 3. Sistem assign 1 stok AVAILABLE → order `DELIVERED`
 4. Buyer buka link order `?token=...` untuk lihat kredensial
 

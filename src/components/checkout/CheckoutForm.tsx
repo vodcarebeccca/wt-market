@@ -71,7 +71,6 @@ export function CheckoutForm({
         return;
       }
 
-      // Redirect to order page — QRIS will be displayed there
       router.push(`/order/${result.orderCode}?token=${result.accessToken}`);
     } catch {
       setError(labels.error);
