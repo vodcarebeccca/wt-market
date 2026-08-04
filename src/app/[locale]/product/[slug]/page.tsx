@@ -10,6 +10,56 @@ type Props = {
   params: Promise<{ locale: string; slug: string }>;
 };
 
+function productJsonLd(product: {
+  slug: string;
+  titleId: string;
+  titleEn: string;
+  descId: string;
+  descEn: string;
+  priceIdr: number;
+  images: { url: string }[];
+  stockCount: number;
+}) {
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL || "https://wt-market.vercel.app";
+  const title = product.titleId;
+  const desc = product.descId.slice(0, 200);
+  const images = product.images
+    .map((img) => {
+      if (img.url.startsWith("http")) return img.url;
+      return `${appUrl.replace(/\/$/, "")}${img.url}`;
+    })
+    .slice(0, 8);
+
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: title,
+    description: desc,
+    image: images,
+    url: `${appUrl.replace(/\/$/, "")}/product/${product.slug}`,
+    offers: {
+      "@type": "Offer",
+      price: product.priceIdr,
+      priceCurrency: "IDR",
+      availability:
+        product.stockCount > 0
+          ? "https://schema.org/InStock"
+          : "https://schema.org/OutOfStock",
+      seller: {
+        "@type": "Organization",
+        name: "WT Market",
+      },
+    },
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    />
+  );
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale, slug } = await params;
   const product = await getProductBySlug(slug);
@@ -45,7 +95,9 @@ export default async function ProductPage({ params }: Props) {
   const coverImage = images[0]?.url ?? product.imageUrl;
 
   return (
-    <div className="space-y-6">
+    <>
+      {productJsonLd(product)}
+      <div className="space-y-6">
       <Link href="/catalog" className="text-sm text-muted hover:text-accent">
         ← {t("product.backCatalog")}
       </Link>
@@ -123,5 +175,6 @@ export default async function ProductPage({ params }: Props) {
         </div>
       </div>
     </div>
+    </>
   );
 }

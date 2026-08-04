@@ -5,6 +5,31 @@ import { listProducts } from "@/lib/products";
 
 type Props = { params: Promise<{ locale: string }> };
 
+function organizationJsonLd() {
+  const appUrl = (process.env.NEXT_PUBLIC_APP_URL || "https://wt-market.vercel.app").replace(/\/$/, "");
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "WT Market",
+    url: appUrl,
+    description:
+      "WT Market — marketplace akun War Thunder. Level, rank, dan nation pilihan. Diproses admin, pembayaran via WhatsApp.",
+    logo: `${appUrl}/logo.png`,
+    sameAs: [],
+    contactPoint: {
+      "@type": "ContactPoint",
+      contactType: "customer service",
+      availableLanguage: ["Indonesian", "English"],
+    },
+  };
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    />
+  );
+}
+
 export default async function HomePage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
@@ -13,7 +38,9 @@ export default async function HomePage({ params }: Props) {
   const products = (await listProducts({ sort: "newest" })).slice(0, 4);
 
   return (
-    <div className="space-y-12">
+    <>
+      {organizationJsonLd()}
+      <div className="space-y-12">
       <section className="glow-card reveal-up scanline relative overflow-hidden rounded-3xl border border-border bg-card p-8 sm:p-12">
         <video
           autoPlay
@@ -73,5 +100,6 @@ export default async function HomePage({ params }: Props) {
         </div>
       </section>
     </div>
+    </>
   );
 }

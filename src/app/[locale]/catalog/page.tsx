@@ -10,6 +10,44 @@ type Props = {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 };
 
+function itemListJsonLd(products: { id: string; slug: string; titleId: string; priceIdr: number; images: { url: string }[]; stockCount: number }[]) {
+  const appUrl = (process.env.NEXT_PUBLIC_APP_URL || "https://wt-market.vercel.app").replace(/\/$/, "");
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    itemListElement: products.map((p, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      url: `${appUrl}/product/${p.slug}`,
+      item: {
+        "@type": "Product",
+        name: p.titleId,
+        url: `${appUrl}/product/${p.slug}`,
+        image: p.images[0]?.url
+          ? p.images[0].url.startsWith("http")
+            ? p.images[0].url
+            : `${appUrl}${p.images[0].url}`
+          : undefined,
+        offers: {
+          "@type": "Offer",
+          price: p.priceIdr,
+          priceCurrency: "IDR",
+          availability:
+            p.stockCount > 0
+              ? "https://schema.org/InStock"
+              : "https://schema.org/OutOfStock",
+        },
+      },
+    })),
+  };
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    />
+  );
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations();
@@ -35,7 +73,9 @@ export default async function CatalogPage({ params, searchParams }: Props) {
   const products = await listProducts(filters);
 
   return (
-    <div className="space-y-6">
+    <>
+      {itemListJsonLd(products)}
+      <div className="space-y-6">
       <div>
         <h1 className="text-3xl font-bold">{t("catalog.title")}</h1>
         <p className="mt-1 text-muted">{t("catalog.subtitle")}</p>
@@ -97,5 +137,6 @@ export default async function CatalogPage({ params, searchParams }: Props) {
         </div>
       </div>
     </div>
+    </>
   );
 }
