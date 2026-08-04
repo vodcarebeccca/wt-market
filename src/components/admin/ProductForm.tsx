@@ -1,4 +1,8 @@
+"use client";
+
+import { useState } from "react";
 import { CATEGORIES, NATIONS } from "@/lib/constants";
+import { ProductImageUploader, type ImageEntry } from "@/components/admin/ProductImageUploader";
 
 type ProductValues = {
   titleId?: string;
@@ -14,6 +18,8 @@ type ProductValues = {
   minRank?: number | null;
   maxRank?: number | null;
   isActive?: boolean;
+  imageUrl?: string | null;
+  images?: { url: string }[];
 };
 
 export function ProductForm({
@@ -25,8 +31,15 @@ export function ProductForm({
   values?: ProductValues;
   submitLabel: string;
 }) {
+  const [images, setImages] = useState<ImageEntry[]>(
+    (values?.images as { url: string; filename: string }[] | undefined)?.map((i) => ({
+      url: i.url,
+      filename: i.url.split("/").pop() || "",
+    })) ?? []
+  );
+
   return (
-    <form action={action} className="card space-y-4 p-5">
+    <form action={action} className="card space-y-5 p-5">
       <div className="grid gap-4 sm:grid-cols-2">
         <label className="block space-y-1 text-sm">
           <span className="text-muted">Judul (ID)</span>
@@ -117,6 +130,11 @@ export function ProductForm({
         <input type="checkbox" name="isActive" defaultChecked={values?.isActive ?? true} />
         <span>Aktif di katalog</span>
       </label>
+
+      <ProductImageUploader
+        existing={images}
+        onImagesChange={(next) => setImages(next)}
+      />
 
       <button className="btn btn-primary" type="submit">
         {submitLabel}

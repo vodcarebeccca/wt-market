@@ -13,7 +13,10 @@ type Props = {
 export default async function EditProductPage({ params, searchParams }: Props) {
   const { id } = await params;
   const sp = await searchParams;
-  const product = await prisma.product.findUnique({ where: { id } });
+  const product = await prisma.product.findUnique({
+    where: { id },
+    include: { images: { orderBy: { sortOrder: "asc" } } },
+  });
   if (!product) notFound();
 
   const update = updateProductAction.bind(null, id);

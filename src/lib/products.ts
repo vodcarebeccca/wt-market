@@ -103,6 +103,10 @@ export async function listProducts(filters: CatalogFilters = {}) {
           stockItems: { where: { status: "AVAILABLE" } },
         },
       },
+      images: {
+        orderBy: { sortOrder: "asc" },
+        take: 1,
+      },
     },
   });
 
@@ -121,6 +125,9 @@ export async function getProductBySlug(slug: string) {
           stockItems: { where: { status: "AVAILABLE" } },
         },
       },
+      images: {
+        orderBy: { sortOrder: "asc" },
+      },
     },
   });
   if (!product || !product.isActive) return null;
@@ -135,6 +142,9 @@ export async function getProductById(id: string) {
         select: {
           stockItems: { where: { status: "AVAILABLE" } },
         },
+      },
+      images: {
+        orderBy: { sortOrder: "asc" },
       },
     },
   });

@@ -25,6 +25,25 @@ const productSchema = z.object({
   isActive: z.coerce.boolean().optional(),
 });
 
+type ImageEntry = {
+  url: string;
+  filename: string;
+};
+
+function parseImageEntries(raw: unknown): ImageEntry[] {
+  if (!raw) return [];
+  try {
+    const arr = JSON.parse(String(raw));
+    if (!Array.isArray(arr)) return [];
+    return arr.filter(
+      (x): x is ImageEntry =>
+        typeof x === "object" && x !== null && typeof x.url === "string" && typeof x.filename === "string"
+    );
+  } catch {
+    return [];
+  }
+}
+
 function formToObject(formData: FormData) {
   return {
     titleId: String(formData.get("titleId") || ""),
@@ -40,25 +59,55 @@ function formToObject(formData: FormData) {
     minRank: formData.get("minRank") || undefined,
     maxRank: formData.get("maxRank") || undefined,
     isActive: formData.get("isActive") === "on" || formData.get("isActive") === "true",
+    imageUrls: formData.get("imageUrls"),
   };
+}
+
+async function upsertProductImages(productId: string, images: ImageEntry[]) {
+  if (images.length === 0) return;
+
+  // Hapus gambar lama, buat baru sesuai urutan
+  await prisma.productImage.deleteMany({ where: { productId } });
+
+  const coverUrl = images[0]?.url;
+
+  await prisma.$transaction([
+    prisma.productImage.createMany({
+      data: images.map((img, i) => ({
+        productId,
+        url: img.url,
+        sortOrder: i,
+      })),
+    }),
+    prisma.product.update({
+      where: { id: productId },
+      data: { imageUrl: coverUrl },
+    }),
+  ]);
 }
 
 export async function createProductAction(formData: FormData) {
   const session = await requireAdmin();
   if (!session) redirect("/admin/login");
 
-  const parsed = productSchema.safeParse(formToObject(formData));
+  const obj = formToObject(formData);
+  const parsed = productSchema.safeParse(obj);
   if (!parsed.success) {
     redirect("/admin/products/new?error=1");
   }
+
+  const images = parseImageEntries(obj.imageUrls);
 
   const product = await prisma.product.create({
     data: {
       ...parsed.data,
       nation: parsed.data.nation || "ANY",
       isActive: parsed.data.isActive ?? true,
+      imageUrl: images[0]?.url ?? null,
     },
   });
+
+  await upsertProductImages(product.id, images);
 
   revalidatePath("/admin/products");
   revalidatePath("/id/catalog");
@@ -70,19 +119,24 @@ export async function updateProductAction(productId: string, formData: FormData)
   const session = await requireAdmin();
   if (!session) redirect("/admin/login");
 
-  const parsed = productSchema.safeParse(formToObject(formData));
+  const obj = formToObject(formData);
+  const parsed = productSchema.safeParse(obj);
   if (!parsed.success) {
     redirect(`/admin/products/${productId}?error=1`);
   }
 
-  await prisma.product.update({
-    where: { id: productId },
-    data: {
-      ...parsed.data,
-      nation: parsed.data.nation || "ANY",
-      isActive: parsed.data.isActive ?? true,
-    },
-  });
+  const images = parseImageEntries(obj.imageUrls);
+  const data: Record<string, unknown> = {
+    ...parsed.data,
+    nation: parsed.data.nation || "ANY",
+    isActive: parsed.data.isActive ?? true,
+  };
+  if (images.length > 0) {
+    data.imageUrl = images[0].url;
+  }
+
+  await prisma.product.update({ where: { id: productId }, data });
+  await upsertProductImages(productId, images);
 
   revalidatePath("/admin/products");
   revalidatePath(`/admin/products/${productId}`);
