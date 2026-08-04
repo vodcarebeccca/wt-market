@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/routing";
 import { useTheme } from "next-themes";
@@ -13,12 +14,22 @@ function useMounted() {
   );
 }
 
+/** Preserve search params (e.g. ?token=...) when switching locale. */
+function useLocaleSwitchHref() {
+  const pathname = usePathname();
+  const cleanPathname = pathname?.replace(/^\/(en|id)\//, "/") || "/";
+  const [search, setSearch] = React.useState("");
+  React.useEffect(() => {
+    setSearch(window.location.search);
+  }, []);
+  return cleanPathname + search;
+}
+
 export function Header() {
   const t = useTranslations();
   const locale = useLocale();
   const otherLocale = locale === "id" ? "en" : "id";
-  const pathname = usePathname();
-  const cleanPathname = pathname?.replace(/^\/(en|id)\//, "/") || "/";
+  const switchHref = useLocaleSwitchHref();
   const { theme, setTheme } = useTheme();
   const mounted = useMounted();
 
@@ -40,7 +51,7 @@ export function Header() {
             {t("nav.legal")}
           </Link>
           <Link
-            href={cleanPathname}
+            href={switchHref}
             locale={otherLocale}
             className="rounded-lg border border-border px-2 py-1 text-xs font-semibold uppercase text-accent hover:bg-accent/10"
           >
