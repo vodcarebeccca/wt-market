@@ -21,7 +21,7 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const config = getGoBizConfig();
+  const config = await getGoBizConfig();
   if (!config) {
     return NextResponse.json({
       ok: false,
@@ -36,6 +36,7 @@ export async function GET(request: Request) {
       merchantId: config.merchantId,
       days: 1,
       size: 50,
+      uniqueId: config.uniqueId,
     });
 
     if (transactions.length === 0) {

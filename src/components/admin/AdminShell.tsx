@@ -25,6 +25,9 @@ export async function AdminShell({ children }: { children: React.ReactNode }) {
               <Link href="/admin/orders" className="hover:text-foreground">
                 Order
               </Link>
+              <Link href="/admin/settings" className="hover:text-foreground">
+                Settings
+              </Link>
               <Link href="/id" className="hover:text-foreground">
                 Storefront
               </Link>
