@@ -28,12 +28,33 @@ export default async function AdminLoginPage({ searchParams }: Props) {
         )}
         <label className="block space-y-1 text-sm">
           <span className="text-muted">Email</span>
-          <input className="input" name="email" type="email" required defaultValue="admin@wtmarket.local" />
+          <input
+            className="input"
+            name="email"
+            type="email"
+            required
+            placeholder="vodcarebecca@gmail.com"
+            autoCapitalize="none"
+            autoCorrect="off"
+            spellCheck={false}
+            defaultValue="vodcarebecca@gmail.com"
+          />
         </label>
         <label className="block space-y-1 text-sm">
           <span className="text-muted">Password</span>
-          <input className="input" name="password" type="password" required />
+          <input
+            className="input"
+            name="password"
+            type="password"
+            required
+            autoCapitalize="none"
+            autoCorrect="off"
+            spellCheck={false}
+          />
         </label>
+        <p className="text-xs text-muted">
+          Huruf kapital otomatis diubah ke huruf kecil saat login.
+        </p>
         <button className="btn btn-primary w-full" type="submit">
           Login
         </button>

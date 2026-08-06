@@ -39,9 +39,13 @@ export async function requireAdmin() {
 }
 
 export async function loginAdmin(email: string, password: string) {
-  const admin = await prisma.adminUser.findUnique({ where: { email } });
+  // Normalize to lowercase — broken-keyboard users can only type uppercase.
+  // The stored hash is lowercase, so compare against the lowercased value.
+  const normalizedEmail = email.trim().toLowerCase();
+  const normalizedPassword = password.toLowerCase();
+  const admin = await prisma.adminUser.findUnique({ where: { email: normalizedEmail } });
   if (!admin) return false;
-  const ok = await bcrypt.compare(password, admin.passwordHash);
+  const ok = await bcrypt.compare(normalizedPassword, admin.passwordHash);
   if (!ok) return false;
 
   const session = await getAdminSession();

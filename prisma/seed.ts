@@ -4,15 +4,20 @@ import bcrypt from "bcryptjs";
 const prisma = new PrismaClient();
 
 async function main() {
-  const email = "admin@wtmarket.local";
-  const password = process.env.ADMIN_PASSWORD || "admin123";
-  const passwordHash = await bcrypt.hash(password, 10);
+  const email = (process.env.ADMIN_EMAIL || "vodcarebecca@gmail.com").trim().toLowerCase();
+  const password = process.env.ADMIN_PASSWORD || "amel0892";
+  const passwordHash = await bcrypt.hash(password.toLowerCase(), 12);
 
   await prisma.adminUser.upsert({
     where: { email },
     update: { passwordHash },
     create: { email, passwordHash },
   });
+
+  // Remove the legacy default admin if it still exists
+  if (email !== "admin@wtmarket.local") {
+    await prisma.adminUser.deleteMany({ where: { email: "admin@wtmarket.local" } });
+  }
 
   await prisma.payment.deleteMany();
   await prisma.orderItem.deleteMany();

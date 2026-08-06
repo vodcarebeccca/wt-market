@@ -6,8 +6,10 @@ import { loginAdmin, logoutAdmin } from "@/lib/auth";
 import { rateLimit } from "@/lib/rate-limit";
 
 export async function adminLoginAction(formData: FormData) {
-  const email = String(formData.get("email") || "").trim();
-  const password = String(formData.get("password") || "");
+  // Normalize to lowercase — broken-keyboard users can only type uppercase.
+  // Both email and password are lowercased before authentication.
+  const email = String(formData.get("email") || "").trim().toLowerCase();
+  const password = String(formData.get("password") || "").toLowerCase();
 
   // Rate-limit per-IP + per-email to slow brute force
   const h = await headers();
