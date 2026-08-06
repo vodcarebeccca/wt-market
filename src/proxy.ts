@@ -1,19 +1,9 @@
 import createMiddleware from "next-intl/middleware";
-import { NextRequest, NextResponse } from "next/server";
 import { routing } from "./i18n/routing";
 
-const intlMiddleware = createMiddleware(routing);
-
-export default function proxy(request: NextRequest) {
-  const { pathname } = request.nextUrl;
-
-  // Admin & API: skip next-intl locale rewrite
-  if (pathname.startsWith("/admin") || pathname.startsWith("/api")) {
-    return NextResponse.next();
-  }
-
-  return intlMiddleware(request);
-}
+// Storefront-only proxy: apply next-intl locale handling to everything.
+// There is no /admin or /api on this app anymore.
+export default createMiddleware(routing);
 
 export const config = {
   matcher: ["/((?!_next|.*\\..*).*)"],

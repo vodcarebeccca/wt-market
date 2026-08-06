@@ -3,6 +3,10 @@ import { Link } from "@/i18n/routing";
 import { ProductCard } from "@/components/catalog/ProductCard";
 import { listProducts } from "@/lib/products";
 
+// Homepage reads live stock/products managed from a separate admin app, so it
+// must not be statically cached — otherwise changes never appear.
+export const dynamic = "force-dynamic";
+
 type Props = { params: Promise<{ locale: string }> };
 
 function organizationJsonLd() {

@@ -14,6 +14,8 @@ const eslintConfig = defineConfig([
     "next-env.d.ts",
     // Utility scripts
     "scripts/**",
+    // Separate admin app (own lint/build)
+    "admin-panel/**",
   ]),
 ]);
 
