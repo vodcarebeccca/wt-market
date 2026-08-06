@@ -9,8 +9,13 @@ export type AdminSessionData = {
   email?: string;
 };
 
+const SESSION_SECRET = process.env.SESSION_SECRET;
+if (!SESSION_SECRET) {
+  throw new Error("SESSION_SECRET env var is required. Set it before starting the server.");
+}
+
 export const sessionOptions: SessionOptions = {
-  password: process.env.SESSION_SECRET || "complex_password_at_least_32_characters_long",
+  password: SESSION_SECRET,
   cookieName: "wt_market_admin",
   cookieOptions: {
     secure: process.env.NODE_ENV === "production",

@@ -40,13 +40,8 @@ export async function retryDeliverAction(orderId: string) {
   if (!session) redirect("/admin/login");
 
   const { deliverOrder } = await import("@/lib/delivery");
-  const order = await prisma.order.findUnique({ where: { id: orderId } });
-  // Allow delivery for PAID, PENDING, or FAILED (consistent with deliverOrder's guard)
-  if (order && (order.status === "PAID" || order.status === "PENDING" || order.status === "FAILED")) {
-    if (order.status === "PAID" || order.status === "PENDING" || order.status === "FAILED") {
-      await deliverOrder(orderId);
-    }
-  }
+  // deliverOrder's internal guard already allows PAID / PENDING / FAILED
+  await deliverOrder(orderId);
 
   revalidatePath(`/admin/orders/${orderId}`);
   redirect(`/admin/orders/${orderId}`);

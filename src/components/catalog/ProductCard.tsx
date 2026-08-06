@@ -16,7 +16,7 @@ type ProductCardProps = {
 };
 
 export function ProductCard({ locale, product, labels }: ProductCardProps) {
-  const { isWishlisted, toggle, loaded } = useWishlist();
+  const { isWishlisted, toggle } = useWishlist();
   const title = locale === "en" ? product.titleEn : product.titleId;
   const price = formatPricePair(product.priceIdr);
   const inStock = product.stockCount > 0;
@@ -42,19 +42,17 @@ export function ProductCard({ locale, product, labels }: ProductCardProps) {
           <span className={`badge ${inStock ? "badge-success" : "badge-danger"}`}>
             {inStock ? labels.stockReady : labels.soldOut}
           </span>
-          {loaded && (
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                toggle(product.id);
-              }}
-              className="text-lg transition-transform hover:scale-125"
-              aria-label={isWishlisted(product.id) ? "Remove from wishlist" : "Add to wishlist"}
-            >
-              {isWishlisted(product.id) ? "❤️" : "🤍"}
-            </button>
-          )}
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              toggle(product.id);
+            }}
+            className="text-lg transition-transform hover:scale-125"
+            aria-label={isWishlisted(product.id) ? "Remove from wishlist" : "Add to wishlist"}
+          >
+            {isWishlisted(product.id) ? "❤️" : "🤍"}
+          </button>
         </div>
       </div>
       <div className="flex flex-1 flex-col gap-2 p-4">

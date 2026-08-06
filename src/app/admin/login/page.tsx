@@ -16,7 +16,12 @@ export default async function AdminLoginPage({ searchParams }: Props) {
           <h1 className="text-2xl font-bold">WT Market Admin</h1>
           <p className="text-sm text-muted">Masuk untuk kelola produk & order</p>
         </div>
-        {sp.error && (
+        {sp.error === "ratelimited" && (
+          <p className="rounded-lg border border-warn/40 bg-warn/10 px-3 py-2 text-sm text-amber-300">
+            Terlalu banyak percobaan login. Coba lagi beberapa saat.
+          </p>
+        )}
+        {sp.error === "1" && (
           <p className="rounded-lg border border-danger/40 bg-danger/10 px-3 py-2 text-sm text-red-300">
             Email atau password salah
           </p>

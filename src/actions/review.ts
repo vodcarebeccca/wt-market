@@ -1,6 +1,7 @@
 "use server";
 
 import { z } from "zod";
+import { prisma } from "@/lib/prisma";
 import { createReview } from "@/lib/reviews";
 
 const schema = z.object({
@@ -21,6 +22,21 @@ export async function submitReview(input: {
   const parsed = schema.safeParse(input);
   if (!parsed.success) {
     return { ok: false, error: "Invalid review data" };
+  }
+
+  // Ownership check: the order must exist, be DELIVERED, and actually contain
+  // this product. Prevents rating spam / reviews for products never purchased.
+  const order = await prisma.order.findFirst({
+    where: {
+      id: parsed.data.orderId,
+      status: "DELIVERED",
+      items: { some: { productId: parsed.data.productId } },
+    },
+    select: { id: true },
+  });
+
+  if (!order) {
+    return { ok: false, error: "Review not allowed: order must be delivered and include this product" };
   }
 
   try {

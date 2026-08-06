@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/routing";
 import { useTheme } from "next-themes";
@@ -14,14 +13,23 @@ function useMounted() {
   );
 }
 
+/** Subscribe to window.location.search changes without setState-in-effect. */
+function useLocationSearch() {
+  return useSyncExternalStore(
+    (cb) => {
+      window.addEventListener("popstate", cb);
+      return () => window.removeEventListener("popstate", cb);
+    },
+    () => window.location.search,
+    () => "",
+  );
+}
+
 /** Preserve search params (e.g. ?token=...) when switching locale. */
 function useLocaleSwitchHref() {
   const pathname = usePathname();
   const cleanPathname = pathname?.replace(/^\/(en|id)\//, "/") || "/";
-  const [search, setSearch] = React.useState("");
-  React.useEffect(() => {
-    setSearch(window.location.search);
-  }, []);
+  const search = useLocationSearch();
   return cleanPathname + search;
 }
 
