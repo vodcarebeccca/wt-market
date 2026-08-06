@@ -7,6 +7,7 @@ import {
 } from "@/actions/admin-stock";
 import { AdminShell } from "@/components/admin/AdminShell";
 import { prisma } from "@/lib/prisma";
+import { decryptCredential } from "@/lib/crypto";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -84,7 +85,9 @@ export default async function ProductStockPage({ params, searchParams }: Props) 
                 return (
                   <tr key={s.id} className="border-b border-border/60">
                     <td className="px-4 py-3 font-mono text-xs">
-                      {s.status === "AVAILABLE" ? s.credential : s.credential.slice(0, 18) + "…"}
+                      {s.status === "AVAILABLE"
+                        ? decryptCredential(s.credential)
+                        : decryptCredential(s.credential).slice(0, 18) + "…"}
                     </td>
                     <td className="px-4 py-3">{s.status}</td>
                     <td className="px-4 py-3 text-muted">

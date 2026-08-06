@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/auth";
+import { encryptCredential } from "@/lib/crypto";
 
 function parseCredentials(raw: string): string[] {
   return raw
@@ -33,10 +34,11 @@ export async function importStockAction(productId: string, formData: FormData) {
     redirect(`/admin/products/${productId}/stock?error=empty`);
   }
 
+  // Encrypt each credential before persisting — DB never stores plaintext.
   await prisma.stockItem.createMany({
     data: lines.map((credential) => ({
       productId,
-      credential,
+      credential: encryptCredential(credential),
       status: "AVAILABLE",
     })),
   });

@@ -8,6 +8,7 @@ import {
 import { AdminShell } from "@/components/admin/AdminShell";
 import { prisma } from "@/lib/prisma";
 import { formatIdr } from "@/lib/money";
+import { decryptCredential } from "@/lib/crypto";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -113,7 +114,7 @@ export default async function AdminOrderDetailPage({ params, searchParams }: Pro
                 <p className="text-muted">{formatIdr(item.unitPriceIdr)}</p>
                 {item.stockItem ? (
                   <pre className="mt-2 overflow-x-auto rounded bg-black/40 p-2 font-mono text-xs">
-                    {item.stockItem.credential}
+                    {decryptCredential(item.stockItem.credential)}
                   </pre>
                 ) : (
                   <p className="mt-2 text-amber-300">Belum di-assign stok</p>

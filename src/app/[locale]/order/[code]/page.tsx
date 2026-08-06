@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { formatPricePair } from "@/lib/money";
 import { rateLimit } from "@/lib/rate-limit";
 import { createWhatsAppPaymentUrl } from "@/lib/payment-config";
+import { decryptCredential } from "@/lib/crypto";
 
 type Props = {
   params: Promise<{ locale: string; code: string }>;
@@ -70,7 +71,10 @@ export default async function OrderPage({ params, searchParams }: Props) {
   });
   const canShowCreds = order.status === "DELIVERED";
   const credentials = canShowCreds
-    ? order.items.map((i) => i.stockItem?.credential).filter(Boolean)
+    ? order.items
+        .map((i) => i.stockItem?.credential)
+        .filter(Boolean)
+        .map((cred) => decryptCredential(cred as string))
     : [];
 
   return (
